@@ -1,0 +1,187 @@
+---
+title: "FY20 Annual Campaign Vendor Report"
+date: "`r Sys.Date()`"
+header-includes:
+- \usepackage{pdflscape}
+- \newcommand{\blandscape}{\begin{landscape}}
+- \newcommand{\elandscape}{\end{landscape}}
+output: pdf_document
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(pander)
+```
+
+
+### Description
+
+This document is intended to provide a high-level comparison of vendor performance during the 2018 and 2019 calendar years. The data gleaned from this comparison is intended to assist in media planning for FY21. It will also provide some insight into the overall health of USM's vendors.
+
+### Data
+
+### Conclusions
+
+* There has been a shift in how USM uses DoubleClick Bid Manager (DBM). Rinck has been able to do more targeted advertising in FY20. The audience, which has previously been broad, has now been segmented into High School students, current Undergraduates, and working adults, allowing USM to promote specific programs. The shift is showing positive results. Click-thru-rates are higher across all DBM's display campaigns and we see more web traffic and lower bounce rates(BR). 
+
+* Facebook (FB) display ad's CTR are only slightly down from the previous calendar year across campaigns Undergraduate and Graduate campaigns, stable for Degree Completion, and up for Transfer. Individual Course and Transfer campaign ad's CTR are above the USM benchmark, but still below the national benchmark. The Facebook platform does generate a good deal of web traffic, however, now that we are able to leverage DBM for targeted campaigns, FB is not the only significant driver of traffic.
+
+* Instagram ads perform well across most campaigns. The CTR's are all above the national benchmark for display ads. 
+
+* Other vendors, Pinterest (PIN), Snapchat (SC), LinkedIn (LI), and YouTube (YT), have continued to have CTRs above benchmark. 
+
+* Gmail (GM) inbox ads did not perform as well this FY. 
+
+* In order to evaluate the effectiveness of FB, IG, and DBM video ads, I will need some additional input from Rinck on benchmarks. 
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+data <- read.csv("C:/Users/christine.iyer/Box/AnnualCampaignVendorPerformance/AnnualCampaignVendor.csv", header = T, stringsAsFactors = F)
+
+data <- data %>% 
+  mutate(Ven_Med_Prod = paste0(Vendor, "_", Product, "_", Medium)) %>% 
+  select(Vendor,Ven_Med_Prod, FY_2018_Master.Impressions:FY_2019_Master.Completions)%>% 
+  mutate_at(3:30, ~replace(., is.na(.), 0)) 
+
+data1 <- data %>% group_by(Ven_Med_Prod) %>% summarise(
+  Imp_18 = sum(FY_2018_Master.Impressions), 
+  Imp_19 = sum(FY_2019_Master.Impressions), 
+  
+   Cl_18 = sum(FY_2018_Master.Clicks), 
+  Cl_19 = sum(FY_2019_Master.Clicks),         
+  CTR_2018 = round(Cl_18/Imp_18* 100, 2) , 
+CTR_2019 = round(Cl_19/Imp_19* 100,2),
+Cost_18 = sum(FY_2018_Master.Cost), 
+Cost_19 = sum(FY_2019_Master.Cost), 
+
+UPV_18 = sum(FY_2018_Master.Unique.Pageviews), 
+UPV_19 = sum(FY_2019_Master.Unique.Pageviews),  
+
+# Bounce_18 = sum(FY_2018_Master.Bounces),
+# Bounce_19 = sum(FY_2019_Master.Bounces),
+# Ses_18 = sum(FY_2018_Master.Sessions), 
+# Ses_19 = sum(FY_2019_Master.Sessions), 
+#   BR_2018 = round(Bounce_18/Ses_18* 100, 2) , 
+# BR_2019 = round(Bounce_19/Ses_19* 100,2), 
+
+Opens_18 = sum(FY_2018_Master.Opens),
+Opens_19 = sum(FY_2019_Master.Opens),
+Sends_18 = sum(FY_2018_Master.Sends), 
+Sends_19 = sum(FY_2019_Master.Sends), 
+  OR_2018 = round(Opens_18/Sends_18* 100, 2) , 
+OR_2019 = round((Opens_19/Sends_19)* 100,2),
+
+Bounce_18 = sum(FY_2018_Master.Bounces),
+Bounce_19 = sum(FY_2019_Master.Bounces),
+Ses_18 = sum(FY_2018_Master.Sessions), 
+Ses_19 = sum(FY_2019_Master.Sessions), 
+  BR_2018 = round(Bounce_18/Ses_18* 100, 2) , 
+BR_2019 = round(Bounce_19/Ses_19* 100,2),
+ 
+Results_18 = sum(FY_2018_Master.Results), 
+ Results_19 = sum(FY_2019_Master.Results), 
+RR_2018 = round(Results_18/Imp_18* 100, 2) , 
+RR_2019 = round(Results_19/Imp_19* 100,2) , 
+
+
+Eng_18 = sum(FY_2018_Master.Engagements), 
+ Eng_19 = sum(FY_2019_Master.Engagements), 
+ER_2018 = round(Eng_18/Imp_18* 100, 2) , 
+ER_2019 = round(Eng_19/Imp_19* 100,2), 
+
+View_18 = sum(FY_2018_Master.Views), 
+ View_19 = sum(FY_2019_Master.Views), 
+VR_2018 = round(Eng_18/Imp_18* 100, 2) , 
+VR_2019 = round(Eng_19/Imp_19* 100,2), 
+
+
+Swipe_18 = sum(FY_2018_Master.Swipes), 
+Swipe_19 = sum(FY_2019_Master.Swipes), 
+SR_2018 = round(Swipe_18/Imp_18* 100, 2) , 
+SR_2019 = round(Swipe_19/Imp_19* 100,2)
+                                                  
+                                                  )%>% 
+  select(Ven_Med_Prod,  Imp_18, Imp_19, CTR_2018, CTR_2019, UPV_18, UPV_19, BR_2018, BR_2019, Cost_18, Cost_19, OR_2018, OR_2019, ER_2018, ER_2019, RR_2018, RR_2019, VR_2018, VR_2019, SR_2018, SR_2019) %>% 
+
+  mutate_at(3:20, ~replace(., is.na(.), 0)) %>% 
+  mutate(Imp_18 = prettyNum(Imp_18, big.mark = ","), 
+         Imp_19 = prettyNum(Imp_19, big.mark = ","), 
+         UPV_18 = prettyNum(UPV_18, big.mark = ","), 
+         UPV_19 = prettyNum(UPV_19, big.mark = ","), 
+         CTR_2018 = paste0(CTR_2018, "%"),
+         CTR_2019 = paste0(CTR_2019, "%"),
+         BR_2018 = paste0(BR_2018, "%"), 
+         BR_2019 = paste0(BR_2019, "%"), 
+         OR_2018 = paste0(OR_2018, "%"), 
+         OR_2019 = paste0(OR_2019, "%"), 
+         ER_2018 = paste0(ER_2018, "%"), 
+         ER_2019 = paste0(ER_2019, "%"), 
+         RR_2018 = paste0(RR_2018, "%"), 
+         RR_2019 = paste0(RR_2019, "%"), 
+         VR_2018 = paste0(VR_2018, "%"), 
+         VR_2019 = paste0(VR_2019, "%"), 
+         Cost_18 = paste0("$", prettyNum(Cost_18, big.mark = ",")), 
+         Cost_19 = paste0("$", prettyNum(Cost_19, big.mark = ",")), 
+         SR_2018 = paste0(ER_2018, "%"), 
+         SR_2019 = paste0(ER_2019, "%")
+           ) %>% 
+  
+  
+  arrange(Ven_Med_Prod)
+
+                                
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                               
+                                                  
+                                                  
+data1[data1=="0"]<-"~"                                              
+
+data1[data1=="0%"]<-"~"  
+
+data11 <- data1 %>% select(Ven_Med_Prod:UPV_19)
+data2 <- data1 %>% select(Ven_Med_Prod, BR_2018:OR_2019)
+data3 <- data1 %>% select(Ven_Med_Prod, ER_2018:VR_2019 )
+data4 <- data1 %>% select(Ven_Med_Prod,SR_2018:SR_2019 )
+
+```
+
+
+\newpage
+\blandscape
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+pander(data11)
+
+```
+\elandscape
+
+\newpage
+
+\blandscape
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+pander(data2)
+
+```
+\elandscape
+
+
+\newpage
+
+\blandscape
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+pander(data3)
+
+```
+\elandscape
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+pander(data4)
+```

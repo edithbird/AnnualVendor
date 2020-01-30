@@ -1,0 +1,361 @@
+---
+title: "Annual Campaign Vendor Report"
+author: "Office of Marketing and Brand Management"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+header-includes:
+- \usepackage{pdflscape}
+- \newcommand{\blandscape}{\begin{landscape}}
+- \newcommand{\elandscape}{\end{landscape}}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = FALSE,
+	warning = FALSE
+)
+```
+
+
+
+```{r }
+library(pander)
+library(dplyr)
+
+```
+
+
+
+```{r, echo=FALSE}
+data <- read.csv("C:/Users/christine.iyer/Box/AnnualCampaignVendorPerformance/AnnualCampaignVendor - Sheet1.csv", header = T, stringsAsFactors = F)
+
+data <- data %>% 
+  mutate(Ven_Med_Prod = paste0(
+    Vendor, "_", 
+    Product, "_", 
+    Medium)) %>% 
+  select(Vendor,Product, Medium,  Ven_Med_Prod, Impressions_FY_2018:MasterViews_FY_2019)
+# %>% 
+#   mutate_at(2:32, ~replace(., is.na(.), 0)) 
+
+# data <- data %>% 
+#   mutate_if(is.integer, ~replace(., is.na(.), 0)) & mutate_if(is.logical(), ~replace(., is.na(.), 0))
+names(data)
+```
+
+
+
+
+```{r}
+data1 <- data %>% group_by(Ven_Med_Prod, Vendor, Medium, Product) %>% summarise(
+  Imp_18 = sum(Impressions_FY_2018), 
+  Imp_19 = sum(Impressions_FY_2019), 
+  
+   Cl_18 = sum(Clicks_FY_2018), 
+  Cl_19 = sum(Clicks_FY_2019),         
+  CTR_2018 = round(Cl_18/Imp_18* 100, 2) , 
+CTR_2019 = round(Cl_19/Imp_19* 100,2),
+Cost_18 = sum(Cost_FY_2018), 
+Cost_19 = sum(Cost_FY_2019), 
+
+UPV_18 = sum(UPV_FY_2018), 
+UPV_19 = sum(UPV_FY_2019),  
+
+Bounce_18 = sum(Bounces_FY_2018),
+Bounce_19 = sum(Bounces_FY_2019),
+Ses_18 = sum(Sessions_FY_2018), 
+Ses_19 = sum(Sessions_FY_2019), 
+  BR_2018 = round(Bounce_18/Ses_18* 100, 2) , 
+BR_2019 = round(Bounce_19/Ses_19* 100,2), 
+
+Opens_18 = sum(MasterOpens_FY_2018),
+Opens_19 = sum(MasterOpens_FY_2019),
+Sends_18 = sum(MasterSends_FY_2018), 
+Sends_19 = sum(MasterSends_FY_2019), 
+  OR_2018 = round(Opens_18/Sends_18* 100, 2) , 
+OR_2019 = round((Opens_19/Sends_19)* 100,2),
+
+Bounce_18 = sum(Bounces_FY_2018),
+Bounce_19 = sum(Bounces_FY_2019),
+Ses_18 = sum(Sessions_FY_2018), 
+Ses_19 = sum(Sessions_FY_2019), 
+  BR_2018 = round(Bounce_18/Ses_18* 100, 2) , 
+BR_2019 = round(Bounce_19/Ses_19* 100,2),
+ 
+Results_18 = sum(MasterResults_FY_2018), 
+ Results_19 = sum(MasterResults_FY_2019), 
+RR_2018 = round(Results_18/Imp_18* 100, 2) , 
+RR_2019 = round(Results_19/Imp_19* 100,2) , 
+
+
+Eng_18 = sum(MasterEngagements_FY_2018), 
+ Eng_19 = sum(MasterEngagements_FY_2019), 
+ER_2018 = round(Eng_18/Imp_18* 100, 2) , 
+ER_2019 = round(Eng_19/Imp_19* 100,2), 
+
+View_18 = sum(MasterViews_FY_2018), 
+ View_19 = sum(MasterViews_FY_2019), 
+VR_2018 = round(Eng_18/Imp_18* 100, 2) , 
+VR_2019 = round(Eng_19/Imp_19* 100,2), 
+
+
+Swipe_18 = sum(MasterSwipes_FY_2018), 
+Swipe_19 = sum(MasterSwipes_FY_2019), 
+SR_2018 = round(Swipe_18/Imp_18* 100, 2) , 
+SR_2019 = round(Swipe_19/Imp_19* 100,2), 
+
+Completions_18 = sum(MasterCompletions_FY_2018),
+Completions_19 = sum(MasterCompletions_FY_2019), 
+VTR_2018 = round(Completions_18/View_18* 100, 2) , 
+VTR_2019 = round(Completions_19/View_19* 100,2)
+
+                                                  
+                                                  )%>% 
+  select(Ven_Med_Prod, Vendor, Medium, Product, Imp_18, Imp_19, CTR_2018, CTR_2019, UPV_18, UPV_19, BR_2018, BR_2019, Cost_18, Cost_19, OR_2018, OR_2019, ER_2018, ER_2019, RR_2018, RR_2019, VR_2018, VR_2019, SR_2018, SR_2019, VTR_2018, VTR_2019) %>% 
+
+  #mutate_at(3:20, ~replace(., is.na(.), 0)) %>% 
+  mutate(Imp_18 = prettyNum(Imp_18, big.mark = ","), 
+         Imp_19 = prettyNum(Imp_19, big.mark = ","), 
+         UPV_18 = prettyNum(UPV_18, big.mark = ","), 
+         UPV_19 = prettyNum(UPV_19, big.mark = ","), 
+         CTR_2018 = paste0(CTR_2018, "%"),
+         CTR_2019 = paste0(CTR_2019, "%"),
+         BR_2018 = paste0(BR_2018, "%"), 
+         BR_2019 = paste0(BR_2019, "%"), 
+         OR_2018 = paste0(OR_2018, "%"), 
+         OR_2019 = paste0(OR_2019, "%"), 
+         ER_2018 = paste0(ER_2018, "%"), 
+         ER_2019 = paste0(ER_2019, "%"), 
+         RR_2018 = paste0(RR_2018, "%"), 
+         RR_2019 = paste0(RR_2019, "%"), 
+         VR_2018 = paste0(VR_2018, "%"), 
+         VR_2019 = paste0(VR_2019, "%"), 
+         Cost_18 = paste0("$", prettyNum(Cost_18, big.mark = ",")), 
+         Cost_19 = paste0("$", prettyNum(Cost_19, big.mark = ",")), 
+         SR_2018 = paste0(ER_2018, "%"), 
+         SR_2019 = paste0(ER_2019, "%"), 
+         VTR_2018 = paste0(VR_2018, "%"), 
+         VTR_2019 = paste0(VR_2019, "%")
+         #,  
+           ) 
+#%>% 
+  
+  
+  #arrange(Ven_Med_Prod)
+
+                                
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                               
+                                                  
+                                                  
+data1[data1=="0"]<-"~"                                              
+
+data1[data1=="0%"]<-"~"  
+data11 <- data1 %>% select(Ven_Med_Prod:UPV_19)
+names(data1)
+
+data2 <- data1 %>% select(Ven_Med_Prod, BR_2018:OR_2019)
+data3 <- data1 %>% select(Ven_Med_Prod, ER_2018:VR_2019 )
+data4 <- data1 %>% select(Ven_Med_Prod,SR_2018:SR_2019 )
+
+
+```
+
+\newpage
+\blandscape
+```{r}
+#mutate_at()
+Facebook <- data1 %>% filter(Vendor =="FB")
+names(Facebook)
+#write.csv(data1, "C:/Users/christine.iyer/Box/AnnualCampaignVendorPerformance/Spreadsheet.csv", row.names = F )
+pander(Facebook %>% 
+         # mutate_at(5:26, )
+         select(Product, Medium, Imp_18:VTR_2019) %>% 
+         arrange(Product))
+```
+\elandscape
+
+
+\newpage
+\blandscape
+```{r}
+pander(data2)
+
+```
+\elandscape
+
+\newpage
+\blandscape
+```{r}
+pander(data3)
+```
+\elandscape
+
+\newpage
+\blandscape
+```{r}
+pander(data4)
+```
+\elandscape
+
+
+```{r}
+# data <- data %>% group_by(Prod_Ven_Med) %>% 
+#   summarise(Impressions_2018 = sum(Impressions._FY_2018),
+#             Impressions_2019 = sum(Impressions._FY_2019), 
+#             Clicks_2018 = sum(Clicks_FY_2018),
+#             Clicks_2019 = sum(Clicks_FY_2019),
+#             CTR_2018 = round(Clicks_2018/Impressions_2018* 100, 2) , 
+#             CTR_2019 = round(Clicks_2019/Impressions_2019* 100,2)) 
+# data1
+```
+
+
+```{r}
+
+#library(reshape2)
+
+```
+
+
+```{r}
+data <- read.csv("C:/Users/christine.iyer/Box/AnnualCampaignVendorPerformance/AnnualCampaignVendor.csv", header = T, stringsAsFactors = F)
+
+data <- data %>% 
+  mutate(Ven_Med_Prod = paste0(Vendor, "_", Product, "_", Medium)) %>% 
+  select(Vendor,Ven_Med_Prod, FY_2018_Master.Impressions:FY_2019_Master.Completions)%>% 
+  mutate_at(3:30, ~replace(., is.na(.), 0)) 
+
+names(data)
+head(data)
+data1 <- data %>% group_by(Ven_Med_Prod) %>% summarise(
+  Imp_18 = sum(FY_2018_Master.Impressions), 
+  Imp_19 = sum(FY_2019_Master.Impressions), 
+  
+   Cl_18 = sum(FY_2018_Master.Clicks), 
+  Cl_19 = sum(FY_2019_Master.Clicks),         
+  CTR_2018 = round(Cl_18/Imp_18* 100, 2) , 
+CTR_2019 = round(Cl_19/Imp_19* 100,2),
+Cost_18 = sum(FY_2018_Master.Cost), 
+Cost_19 = sum(FY_2019_Master.Cost), 
+
+UPV_18 = sum(FY_2018_Master.Unique.Pageviews), 
+UPV_19 = sum(FY_2019_Master.Unique.Pageviews),  
+
+# Bounce_18 = sum(FY_2018_Master.Bounces),
+# Bounce_19 = sum(FY_2019_Master.Bounces),
+# Ses_18 = sum(FY_2018_Master.Sessions), 
+# Ses_19 = sum(FY_2019_Master.Sessions), 
+#   BR_2018 = round(Bounce_18/Ses_18* 100, 2) , 
+# BR_2019 = round(Bounce_19/Ses_19* 100,2), 
+
+Opens_18 = sum(FY_2018_Master.Opens),
+Opens_19 = sum(FY_2019_Master.Opens),
+Sends_18 = sum(FY_2018_Master.Sends), 
+Sends_19 = sum(FY_2019_Master.Sends), 
+  OR_2018 = round(Opens_18/Sends_18* 100, 2) , 
+OR_2019 = round((Opens_19/Sends_19)* 100,2),
+
+Bounce_18 = sum(FY_2018_Master.Bounces),
+Bounce_19 = sum(FY_2019_Master.Bounces),
+Ses_18 = sum(FY_2018_Master.Sessions), 
+Ses_19 = sum(FY_2019_Master.Sessions), 
+  BR_2018 = round(Bounce_18/Ses_18* 100, 2) , 
+BR_2019 = round(Bounce_19/Ses_19* 100,2),
+ 
+Results_18 = sum(FY_2018_Master.Results), 
+ Results_19 = sum(FY_2019_Master.Results), 
+RR_2018 = round(Results_18/Imp_18* 100, 2) , 
+RR_2019 = round(Results_19/Imp_19* 100,2) , 
+
+
+Eng_18 = sum(FY_2018_Master.Engagements), 
+ Eng_19 = sum(FY_2019_Master.Engagements), 
+ER_2018 = round(Eng_18/Imp_18* 100, 2) , 
+ER_2019 = round(Eng_19/Imp_19* 100,2), 
+
+View_18 = sum(FY_2018_Master.Views), 
+ View_19 = sum(FY_2019_Master.Views), 
+VR_2018 = round(Eng_18/Imp_18* 100, 2) , 
+VR_2019 = round(Eng_19/Imp_19* 100,2), 
+
+
+Swipe_18 = sum(FY_2018_Master.Swipes), 
+Swipe_19 = sum(FY_2019_Master.Swipes), 
+SR_2018 = round(Swipe_18/Imp_18* 100, 2) , 
+SR_2019 = round(Swipe_19/Imp_19* 100,2)
+                                                  
+                                                  )%>% 
+  select(Ven_Med_Prod,  Imp_18, Imp_19, CTR_2018, CTR_2019, UPV_18, UPV_19, BR_2018, BR_2019, Cost_18, Cost_19, OR_2018, OR_2019, ER_2018, ER_2019, RR_2018, RR_2019, VR_2018, VR_2019, SR_2018, SR_2019) %>% 
+
+  mutate_at(3:20, ~replace(., is.na(.), 0)) %>% 
+  mutate(Imp_18 = prettyNum(Imp_18, big.mark = ","), 
+         Imp_19 = prettyNum(Imp_19, big.mark = ","), 
+         UPV_18 = prettyNum(UPV_18, big.mark = ","), 
+         UPV_19 = prettyNum(UPV_19, big.mark = ","), 
+         CTR_2018 = paste0(CTR_2018, "%"),
+         CTR_2019 = paste0(CTR_2019, "%"),
+         BR_2018 = paste0(BR_2018, "%"), 
+         BR_2019 = paste0(BR_2019, "%"), 
+         OR_2018 = paste0(OR_2018, "%"), 
+         OR_2019 = paste0(OR_2019, "%"), 
+         ER_2018 = paste0(ER_2018, "%"), 
+         ER_2019 = paste0(ER_2019, "%"), 
+         RR_2018 = paste0(RR_2018, "%"), 
+         RR_2019 = paste0(RR_2019, "%"), 
+         VR_2018 = paste0(VR_2018, "%"), 
+         VR_2019 = paste0(VR_2019, "%"), 
+         Cost_18 = paste0("$", prettyNum(Cost_18, big.mark = ",")), 
+         Cost_19 = paste0("$", prettyNum(Cost_19, big.mark = ",")), 
+         SR_2018 = paste0(ER_2018, "%"), 
+         SR_2019 = paste0(ER_2019, "%")
+           ) %>% 
+  
+  
+  arrange(Ven_Med_Prod)
+
+                                
+                                                  
+                                                  
+                                                  
+                                                  
+                                                  
+                                               
+                                                  
+                                                  
+data1[data1=="0"]<-"~"                                              
+
+data1[data1=="0%"]<-"~"  
+#data11 <- data1 %>% select(Ven_Med_Prod:UPV_19)
+data1
+```
+
+```{r}
+# head(data)
+# data <- dcast(melt(data, id.vars = c("Time.Period", "Prod_Ven_Med")), Prod_Ven_Med~variable+Time.Period)
+# head(data1)
+```
+
+```{r}
+# data %>% 
+#   mutate_at(2:29, ~replace(., is.na(.), 0)) %>% 
+#   group_by(Prod_Ven_Med) %>% 
+#   summarise(Impressions_2018 = sum(Impressions_FY_2018),
+#             Impressions_2019 = sum(Impressions_FY_2019), 
+#             Clicks_2018 = sum(Clicks_FY_2018),
+#             Clicks_2019 = sum(Clicks_FY_2019),
+#             CTR_2018 = round(Clicks_2018/Impressions_2018* 100, 2) , 
+#             CTR_2019 = round(Clicks_2019/Impressions_2019* 100,2) )
+```
+
+```{r}
+
+```
+
