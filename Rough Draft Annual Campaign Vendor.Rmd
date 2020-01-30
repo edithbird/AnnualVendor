@@ -28,7 +28,7 @@ The Office of Branding and Marketing uses digital advertising to promote the uni
 - **Graduate Campaign:** Advertising reaching Undergraduate students and working adults. 
 
 
-Each campaign is made up a variety of digital ads, including display (DISP), video (VID), carousel (CAR), and text (TEXT), through 10 vendors. This report provodes an overview of the performance of each portfolio's components.
+Each campaign is made up a variety of digital ads, including display (DISP), video (VID), carousel (CAR), and text (TEXT), through 10 vendors. This report provides an overview of the performance of each portfolio's components.
 
 
 
@@ -170,7 +170,6 @@ data4 <- data1 %>% select(Ven_Med_Prod,SR_2018:SR_2019 )
 # Umbrella
 
 
-
 ## Program: University Brand
 
 ### Audience: All Prospective Students and Influencers
@@ -188,7 +187,11 @@ kable(UG_DISP, format="latex", booktabs=TRUE) %>%
   kable_styling(latex_options="scale_down")
 ```
 
-* This needs to be verified with Rinck. Did we 
+* The table above shows the metrics for Programmatic digital display ads. The Programmatic budget was increased in FY19 because digital ads through local newspapers were sub-performing in FY18. 
+
+* We see that the CTR improved from 0.03% in 2018 to 0.06% in 2019. 
+
+
 **Medium: VID**
 
 
@@ -200,6 +203,13 @@ Umb <- Umb[c(1,3,6), ]
 kable(Umb, format="latex", booktabs=TRUE) %>% 
   kable_styling(latex_options="scale_down")
 ```
+
+
+* The table above shows the metrics for Programmatic video ads. The Programmatic budget was increased in 2019 because digital ads through local newspapers were sub-performing in 2018. 
+
+* We see that the CTR improved from 0.14% in 2018 to 0.64% in 2019. 
+
+* Unique pageviews dropped by nearly half. However the bounce rate fell from 90% to 70%. 
 
 #
 
@@ -216,7 +226,7 @@ kable(Umb, format="latex", booktabs=TRUE) %>%
   kable_styling(latex_options="scale_down")
 ```
 
-
+* We have not run audio ads this year, thus there is no basis for comparison.
 # Undergraduate Degree
 
 ## Program: Traditional Undergraduate Degree
@@ -239,11 +249,8 @@ kable(UG_DISP, format="latex", booktabs=TRUE) %>%
   kable_styling(latex_options="scale_down")
 ```
 
-* There has been a shift in how USM uses DoubleClick Bid Manager (DBM). Rinck has been able to
-do more targeted advertising in FY20. The audience, which has previously been broad, has now been
-segmented into different age groups, allowing USM to
-promote specific programs. The shift is showing positive results. Click-thru-rates are higher across all
-DBM’s display campaigns and we see more web traffic and lower bounce rates(BR).
+* There has been a shift in how USM uses Programmatic (DBM). Rinck has been able to do more targeted advertising in FY20 with this vendor. The audience, which has previously been broad to promote the umbrella campaign, has now been segmented into different age groups, allowing USM to
+promote specific programs. The shift is showing positive results. Click-thru-rates are higher across all DBM’s display campaigns and we see more web traffic and lower bounce rates(BR). **This is in contrast to Rinck's findings of fewer conversions in FY20.**
 
 * Facebook (FB) click-through-rate (CTR) is up from 2018, however, because the budget is much lower for FB display, the web traffic has followed suit. 
 
@@ -261,7 +268,9 @@ kable(UG_VID, format="latex", booktabs=TRUE) %>%
   kable_styling(latex_options="scale_down")
 ```
 
-* YouTube(YT), Snapchat(SC), and IG are performing steadily from 2019. We see a dramatic drop in FB View Rates (VR) and View-through-Rates (VTR). I addressed with the agency and inquired about the benchmarks. The suspicion is that they won't be publishing benchmarks. 
+* YouTube(YT), Snapchat(SC), and IG are performing consistently. We see a dramatic drop in FB View Rates (VR) and View-through-Rates (VTR). I addressed with the agency and inquired about the benchmarks. The suspicion is that they won't be publishing benchmarks. 
+
+* We may wish to discuss this further in for FY21 media planning. 
 
 
 **Medium: CAR**
@@ -276,8 +285,9 @@ kable(UG_CAR, format="latex", booktabs=TRUE) %>%
   kable_styling(latex_options="scale_down")
 ```
 
-* Carousel ads were introduced in 2019. 
-* Rinck does not have benchmarks for carousel ads.
+* Carousel ads, for which Rinck does not have benchmarks, were introduced in 2019. Their CTR was slightly higher when they were initiated early in 2019 has fluctuated between 0.4%-0.5%. 
+
+
 
 ### Audience: Influencers
 
@@ -294,7 +304,7 @@ kable(head(UG_IN_DISP,1), format="latex", booktabs=TRUE) %>%
   kable_styling(latex_options="scale_down")
 ```
 
-Pinterest ads continue to grow as a strong platform for reaching influencers. The increase in spending yielded exponentially traffic. The bounce rate went up from 2018 to 2019, but the average time on page remained about the same (1:11 in 2018 vs 1:05 in 2019).
+* Pinterest ads continue to grow as a strong platform for reaching influencers. The increase in spending yielded exponentially traffic. The bounce rate went up from 2018 to 2019, but the average time on page remained about the same (1:11 in 2018 vs 1:05 in 2019).
 
 ## Program: Undergraduate Degree for Transfer Students
 
@@ -317,9 +327,13 @@ kable(TR_DISP_CU, format="latex", booktabs=TRUE) %>%
   kable_styling(latex_options="scale_down")
 ```
 
-* Comment
+* In 2018, we did not run DBM display targeting current undergraduates, however the CTR 0.07% is higher than than it was last year for the Umbrella campaign. 
 
-* Comment
+* We saw a massive decrease in spending on FB and a resulting decrease in web traffic, however, the CTR is improved. This may be a result of the different timing if FY20's Transfer campaign. The same is true for Instagram, though the decreases are not as steep and the CTR are been about the same year over year. CTR for all vendors has been above their respective benchmarks.
+
+*Twitter KPIs, Engagement Rate and Results Rate (ER and RR) are also above benchmarks.
+
+
 
 **Medium: VID**
 
@@ -333,11 +347,9 @@ kable(TR_VID, format="latex", booktabs=TRUE) %>%
   kable_styling(latex_options="scale_down")
 ```
 
-* You Tube is new for program camp. Doing well. FB and IG went up well. 
+* You Tube has been doing well. This is a new platform for the Transfer campaign. 
 
-* Transfer has been split run times. 
-
-
+* FB CTR has increased, but again we do not have benchmarks available 
 
 
 
@@ -345,7 +357,10 @@ kable(TR_VID, format="latex", booktabs=TRUE) %>%
 
 
 
-## Program: Undegraduate Degree Completion 
+
+
+
+## Program: Undergraduate Degree Completion 
 
 ### Audience: Working Adults
 
@@ -367,11 +382,9 @@ kable(DC_DISP_WA, format="latex", booktabs=TRUE) %>%
   kable_styling(latex_options="scale_down")
 ```
 
-* There has been a shift in how USM uses DoubleClick Bid Manager (DBM). Rinck has been able to
-do more targeted advertising in FY20. The audience, which has previously been broad, has now been
-segmented into High School students, current Undergraduates, and working adults, allowing USM to
-promote specific programs. The shift is showing positive results. Click-thru-rates are higher across all
-DBM’s display campaigns and we see more web traffic and lower bounce rates(BR).
+* In 2018, we did not run DBM display targeting working adults, however the CTR 0.07% is higher than than it was last year for the Umbrella campaign. 
+
+* FB CTR is consistent at 0.34%, however, web traffic is down, 6,825 UPV in 2018 vs 2,088 in 2019. This warrants discussion.  
 
 **Medium: VID**
 
@@ -385,6 +398,9 @@ kable(WA_VID, format="latex", booktabs=TRUE) %>%
   kable_styling(latex_options="scale_down")
 ```
 
+* There has been an increase in budget for FV Video among working adults. VR and VTR has increased, as has web traffic.
+
+* IG KPIs have increase, yet the budget dropped a bit. 
 
 # Graduate Degree
 
@@ -399,7 +415,7 @@ kable(WA_VID, format="latex", booktabs=TRUE) %>%
 
 
 GR_DISP_ALL <- data1 %>% 
-        filter(str_detect(Ven_Med_Prod, "GR_DISP_WA")) %>% 
+        filter(str_detect(Ven_Med_Prod, "GR_DISP_CU")) %>% 
         select(1:11)
 
 
@@ -408,11 +424,29 @@ kable(GR_DISP_ALL, format="latex", booktabs=TRUE) %>%
   kable_styling(latex_options="scale_down")
 ```
 
-**Medium: Text**
+* In 2019, we doubled the FB budget for targeting current undergraduates for the Graduate program, but the the KPIs have dipped significantly. 
+
+*Conversely, IG has been consistent. 
+
+**Medium: VID**
 
 ```{r}
+GR_VID_CU <- data1 %>% 
+        filter(str_detect(Ven_Med_Prod, "GR_VID_CU")) %>% 
+        select(1:11, VR_2018, VR_2019, VTR_2018, VTR_2019)
+
+
+kable(GR_VID_CU, format="latex", booktabs=TRUE) %>% 
+  kable_styling(latex_options="scale_down")
+```
+
+* It appears FB video performance has improved from 2018, perhaps justifying the increase in budget allocation. 
+
+```{r eval=FALSE, include=FALSE}
+#**Medium: Text**
+
 GR_TEXT_WA <- data1 %>% 
-        filter(str_detect(Ven_Med_Prod, "v")) %>% 
+        filter(str_detect(Ven_Med_Prod, "GR_TEXT_CU")) %>% 
         select(1:11, OR_2018, OR_2019)
 
 
@@ -430,7 +464,7 @@ kable(GR_TEXT_WA, format="latex", booktabs=TRUE) %>%
 
 
 GR_DISP_CU <- data1 %>% 
-        filter(str_detect(Ven_Med_Prod, "GR_DISP_CU")) %>% 
+        filter(str_detect(Ven_Med_Prod, "GR_DISP_WA")) %>% 
         select(1:11)
 
 
@@ -457,7 +491,7 @@ kable(GR_TEXT_ALL, format="latex", booktabs=TRUE) %>%
 
 ```{r}
 GR_VID_CU <- data1 %>% 
-        filter(str_detect(Ven_Med_Prod, "GR_VID_CU")) %>% 
+        filter(str_detect(Ven_Med_Prod, "GR_VID_WA")) %>% 
         select(1:11, VR_2018, VR_2019, VTR_2018, VTR_2019)
 
 
