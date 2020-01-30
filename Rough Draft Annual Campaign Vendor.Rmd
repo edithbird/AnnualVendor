@@ -1,7 +1,7 @@
 ---
 title: "Rough Draft Annual Campaign Vendor Performance by Degree Program"
 author: "Office of Marketing and Brand Management"
-date: "`r Sys.Date()`"
+date:  "`r Sys.time()`"
 output:
   pdf_document: default
   html_document: default
