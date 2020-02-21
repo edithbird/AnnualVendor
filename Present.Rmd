@@ -3,17 +3,20 @@ title: "Untitled"
 author: "Office of Marketing and Brand Management"
 date: "2/20/2020"
 output: slidy_presentation
+
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
 	echo = FALSE,
 	message = FALSE,
-	warning = FALSE
+	warning = FALSE,
+	fig.width=6, 
+	fig.height=3
 )
 ```
 
-```{r}
+```{r fig.height=2, fig.width=4}
 library(knitr)
 library(janitor)
 library(tidyr)
@@ -78,14 +81,15 @@ FMVM <- FM %>%
     EngRate = round((sum(LIOpens)+sum(Engagements))/sum(Sends)*100, 2),  
     LICTOR = round(sum(LIClicks)/sum(LIOpens) * 100, 2)) %>%
   select(Week, Impressions, Clicks, Bounces, Sessions, Swipes, ClickRatePct, SwipeUpRatePct, UPV, BounceRatePct, Av_TOP, ClickableCompRate, VTR, CTOR,OpenRate, Sends, ViewRate, ClickableCompletions, Completions, Opens, LIOpens, LIClicks, Engagements, LICTOR, EngRate, EngagementRate)
+
 ```
 
 
 
 
 
-```{r}
-fahrenheit_to_celsius <- function(temp_F) {
+```{r Facebook Display}
+FB_DISP_PLT <- function(temp_F) {
   PGCTR <- IGD %>%  
     ggplot(aes(x = Week, y = ClickRatePct , color = Code_Audience)) +
     geom_line(size = 1.2) +
@@ -137,65 +141,441 @@ fahrenheit_to_celsius <- function(temp_F) {
 }
 
 
-
-```
-
-
-```{r}
-celsius_to_fahrenheight <- function(temp_C){
-  YTD <- FMVM %>%
-  mutate(ReportingPeriod = "YTD") %>% 
+FB_DISP_TBL <- function(temp_C){
+  TD <- IGD %>%
+  mutate(ReportingPeriod = "YTD") %>%
   group_by(Code_Audience, ReportingPeriod) %>%
         summarise(YTD_Impressions = prettyNum(round(sum(Impressions),0), big.mark = ","),
                   Avg_CTR = round(sum(Clicks)/sum(Impressions) * 100, 2),
-                  YTD_UPV = prettyNum(round(sum(UPV),0), big.mark = ","), 
+                  YTD_UPV = prettyNum(round(sum(UPV),0), big.mark = ","),
                   Avg_BR = paste0(round(sum(Bounces)/sum(Sessions) * 100, 2), "%"),
                   Avg_CTR = paste0(Avg_CTR, "%") )
-                  
+ return(kable(TD))
 }
-print(celsius_to_fahrenheight())
+
 ```
 
+```{r Instagram Display}
+IG_DISP_PLT <- function(temp_F) {
+  PGCTR <- IGD %>%  
+    ggplot(aes(x = Week, y = ClickRatePct , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank()) +
+    geom_hline(yintercept = 0.16, linetype="dashed")
+  
+  PGImp <- IGD %>% 
+    ggplot(aes(x = Week, y = Impressions , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+    theme(axis.title.x=element_blank(),
+          axis.ticks.x=element_blank()) 
+  
+  
+  PGUPV <- IGD %>% 
+    ggplot(aes(x = Week, y = UPV , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())
+  
+  
+  
+  PGBR <- IGD %>% 
+    ggplot(aes(x = Week, y = BounceRatePct , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())
+  
+  
+  a <- ggarrange(PGImp, PGCTR, PGUPV, PGBR, ncol=4, nrow=1, common.legend = TRUE, legend="right")
+  annotate_figure(a, text_grob(paste0( IGD$Code_Vendor, "_ ", IGD$Code_Medium, "_ ", IGD$Code_Product), color = "darkblue", face = "plain", size = 18, just = "right"))
+  
+  
+  
+}
+
+
+IG_DISP_TBL <- function(temp_C){
+  TD <- IGD %>%
+  mutate(ReportingPeriod = "YTD") %>%
+  group_by(Code_Audience, ReportingPeriod) %>%
+        summarise(YTD_Impressions = prettyNum(round(sum(Impressions),0), big.mark = ","),
+                  Avg_CTR = round(sum(Clicks)/sum(Impressions) * 100, 2),
+                  YTD_UPV = prettyNum(round(sum(UPV),0), big.mark = ","),
+                  Avg_BR = paste0(round(sum(Bounces)/sum(Sessions) * 100, 2), "%"),
+                  Avg_CTR = paste0(Avg_CTR, "%") )
+ return(kable(TD))
+}
+
+```
+
+
+```{r Prog Display}
+DBM_DISP_PLT <- function(temp_F) {
+  PGCTR <- IGD %>%  
+    ggplot(aes(x = Week, y = ClickRatePct , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank()) +
+    geom_hline(yintercept = 0.08, linetype="dashed")
+  
+  PGImp <- IGD %>% 
+    ggplot(aes(x = Week, y = Impressions , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+    theme(axis.title.x=element_blank(),
+          axis.ticks.x=element_blank()) 
+  
+  
+  PGUPV <- IGD %>% 
+    ggplot(aes(x = Week, y = UPV , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())
+  
+  
+  
+  PGBR <- IGD %>% 
+    ggplot(aes(x = Week, y = BounceRatePct , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())
+  
+  
+  a <- ggarrange(PGImp, PGCTR, PGUPV, PGBR, ncol=4, nrow=1, common.legend = TRUE, legend="right")
+  annotate_figure(a, text_grob(paste0( IGD$Code_Vendor, "_ ", IGD$Code_Medium, "_ ", IGD$Code_Product), color = "darkblue", face = "plain", size = 18, just = "right"))
+  
+  
+  
+}
+
+
+DBM_DISP_TBL <- function(temp_C){
+  TD <- IGD %>%
+  mutate(ReportingPeriod = "YTD") %>%
+  group_by(Code_Audience, ReportingPeriod) %>%
+        summarise(YTD_Impressions = prettyNum(round(sum(Impressions),0), big.mark = ","),
+                  Avg_CTR = round(sum(Clicks)/sum(Impressions) * 100, 2),
+                  YTD_UPV = prettyNum(round(sum(UPV),0), big.mark = ","),
+                  Avg_BR = paste0(round(sum(Bounces)/sum(Sessions) * 100, 2), "%"),
+                  Avg_CTR = paste0(Avg_CTR, "%") )
+ return(kable(TD))
+}
+
+```
+
+
+```{r Pinterest Display}
+PIN_DISP_PLT <- function(temp_F) {
+  PGCTR <- IGD %>%  
+    ggplot(aes(x = Week, y = ClickRatePct , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank()) +
+    geom_hline(yintercept = 0.2, linetype="dashed")
+  
+  PGImp <- IGD %>% 
+    ggplot(aes(x = Week, y = Impressions , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+    theme(axis.title.x=element_blank(),
+          axis.ticks.x=element_blank()) 
+  
+  
+  PGUPV <- IGD %>% 
+    ggplot(aes(x = Week, y = UPV , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())
+  
+  
+  
+  PGBR <- IGD %>% 
+    ggplot(aes(x = Week, y = BounceRatePct , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())
+  
+  
+  a <- ggarrange(PGImp, PGCTR, PGUPV, PGBR, ncol=4, nrow=1, common.legend = TRUE, legend="right")
+  annotate_figure(a, text_grob(paste0( IGD$Code_Vendor, "_ ", IGD$Code_Medium, "_ ", IGD$Code_Product), color = "darkblue", face = "plain", size = 18, just = "right"))
+  
+  
+  
+}
+
+
+PIN_DISP_TBL <- function(temp_C){
+  TD <- IGD %>%
+  mutate(ReportingPeriod = "YTD") %>%
+  group_by(Code_Audience, ReportingPeriod) %>%
+        summarise(YTD_Impressions = prettyNum(round(sum(Impressions),0), big.mark = ","),
+                  Avg_CTR = round(sum(Clicks)/sum(Impressions) * 100, 2),
+                  YTD_UPV = prettyNum(round(sum(UPV),0), big.mark = ","),
+                  Avg_BR = paste0(round(sum(Bounces)/sum(Sessions) * 100, 2), "%"),
+                  Avg_CTR = paste0(Avg_CTR, "%") )
+ return(kable(TD))
+}
+
+```
+
+
+```{r Gmail Display}
+GM_DISP_PLT <- function(temp_F) {
+  PGCTR <- IGD %>%  
+    ggplot(aes(x = Week, y = ClickRatePct , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank()) +
+    geom_hline(yintercept = c(4, 10), linetype="dashed")
+  
+  PGImp <- IGD %>% 
+    ggplot(aes(x = Week, y = Impressions , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+    theme(axis.title.x=element_blank(),
+          axis.ticks.x=element_blank()) 
+  
+  
+  PGUPV <- IGD %>% 
+    ggplot(aes(x = Week, y = UPV , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())
+  
+  kable(names(FMVM))
+  
+  PGCTOR <- IGD %>% 
+    ggplot(aes(x = Week, y = CTOR , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())+
+    geom_hline(yintercept = 2.48, linetype="dashed")
+  
+  
+  a <- ggarrange(PGImp, PGCTR, PGUPV, PGCTOR, ncol=4, nrow=1, common.legend = TRUE, legend="right")
+  annotate_figure(a, text_grob(paste0( IGD$Code_Vendor, "_ ", IGD$Code_Medium), color = "darkblue", face = "plain", size = 18, just = "right"))
+  
+  
+  
+}
+
+
+GM_DISP_TBL <- function(temp_C){
+  TD <- IGD %>%
+  mutate(ReportingPeriod = "YTD") %>%
+  group_by(Code_Audience, ReportingPeriod) %>%
+        summarise(YTD_Impressions = prettyNum(round(sum(Impressions),0), big.mark = ","),
+                  Avg_CTR = round(sum(Clicks)/sum(Impressions) * 100, 2),
+                  YTD_UPV = prettyNum(round(sum(UPV),0), big.mark = ","),
+                  Avg_CTOR = paste0(round(sum(Opens)/sum(Clicks) * 100, 2), "%"),
+                  Avg_CTR = paste0(Avg_CTR, "%") )
+ return(kable(TD))
+}
+
+```
+
+
+```{r LI Display}
+LI_DISP_PLT <- function(temp_F) {
+  PGCTR <- IGD %>%  
+    ggplot(aes(x = Week, y = ClickRatePct , color = Code_Product)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank()) +
+    geom_hline(yintercept = 0.15, linetype="dashed")
+  
+  PGImp <- IGD %>% 
+    ggplot(aes(x = Week, y = Impressions , color = Code_Product)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+    theme(axis.title.x=element_blank(),
+          axis.ticks.x=element_blank()) 
+  
+  
+  PGUPV <- IGD %>% 
+    ggplot(aes(x = Week, y = UPV , color = Code_Product)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())
+  
+  
+  
+  PGBR <- IGD %>% 
+    ggplot(aes(x = Week, y = BounceRatePct , color = Code_Product)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())
+  
+  
+  a <- ggarrange(PGImp, PGCTR, PGUPV, PGBR, ncol=4, nrow=1, common.legend = TRUE, legend="right")
+  annotate_figure(a, text_grob(paste0( IGD$Code_Vendor, "_ ", IGD$Code_Medium, "_ ", IGD$Code_Product), color = "darkblue", face = "plain", size = 18, just = "right"))
+  
+  
+  
+}
+
+
+LI_DISP_TBL <- function(temp_C){
+  TD <- IGD %>%
+  mutate(ReportingPeriod = "YTD") %>%
+  group_by(Code_Product, ReportingPeriod) %>%
+        summarise(YTD_Impressions = prettyNum(round(sum(Impressions),0), big.mark = ","),
+                  Avg_CTR = round(sum(Clicks)/sum(Impressions) * 100, 2),
+                  YTD_UPV = prettyNum(round(sum(UPV),0), big.mark = ","),
+                  Avg_BR = paste0(round(sum(Bounces)/sum(Sessions) * 100, 2), "%"),
+                  Avg_CTR = paste0(Avg_CTR, "%") )
+ return(kable(TD))
+}
+
+```
 
 ## FB_DISP_UG
 
 ```{r}
+start_Date <- as.Date("2019-08-01")
+end_Date <- as.Date("2019-09-17")
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "FB" & Code_Medium == "DISP" & Code_Product == "UG") 
-#%>%
-  #mutate(Week = as.Date(Week))
+  filter(Code_Vendor == "FB" & Code_Medium == "DISP" & Code_Product == "UG" & Week >= start_Date & Week <= end_Date) 
 
 
 
-fahrenheit_to_celsius(a)
-celsius_to_fahrenheight(YTD)
+
+FB_DISP_PLT(a)
+FB_DISP_TBL(TD)
+
 ```
 
 ## IG_DISP_UG
 
 ```{r}
+start_Date <- as.Date("2019-08-01")
+end_Date <- as.Date("2019-09-17")
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "IG" & Code_Medium == "DISP" & Code_Product == "UG") 
-#%>%
-  #mutate(Week = as.Date(Week))
+  filter(Code_Vendor == "IG" & Code_Medium == "DISP" & Code_Product == "UG" & Week >= start_Date & Week <= end_Date)
+IG_DISP_PLT(a)
+IG_DISP_TBL(TD)
 
 
-
-fahrenheit_to_celsius(a)
-celsius_to_fahrenheight(YTD)
 ```
 
 
 ## DBM_DISP_UG
 
 ```{r}
+start_Date <- as.Date("2019-08-01")
+end_Date <- as.Date("2019-09-17")
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "DBM" & Code_Medium == "DISP" & Code_Product == "UG") 
-#%>%
-  #mutate(Week = as.Date(Week))
+  filter(Code_Vendor == "DBM" & Code_Medium == "DISP" & Code_Product == "UG"& Week >= start_Date & Week <= end_Date) 
 
 
 
-fahrenheit_to_celsius(a)
-celsius_to_fahrenheight(YTD)
+
+DBM_DISP_PLT(a)
+DBM_DISP_TBL(TD)
+```
+
+## PIN_DISP_UG
+
+```{r}
+start_Date <- as.Date("2019-08-01")
+end_Date <- as.Date("2019-09-17")
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "PIN" & Code_Medium == "DISP" & Code_Product == "UG" & Week >= start_Date & Week <= end_Date) 
+PIN_DISP_PLT(a)
+PIN_DISP_TBL(TD)
+```
+
+## GM_TEXT
+
+```{r}
+start_Date <- as.Date("2019-08-01")
+end_Date <- as.Date("2019-12-17")
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "GM"  & Week >= start_Date & Week <= end_Date) 
+
+
+
+           
+GM_DISP_PLT(a)
+GM_DISP_TBL(TD)
+
+```
+
+## LI_DISP
+
+
+```{r}
+start_Date <- as.Date("2019-08-01")
+end_Date <- as.Date("2020-02-17")
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "LI" & Code_Medium == "DISP"  & Week >= start_Date & Week <= end_Date) 
+LI_DISP_PLT(a)
+LI_DISP_TBL(TD)
+
 ```
