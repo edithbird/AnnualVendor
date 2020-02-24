@@ -80,7 +80,7 @@ FMVM <- FM %>%
     EngagementRate = round(Engagements/Impressions * 100, 2),
     EngRate = round((sum(LIOpens)+sum(Engagements))/sum(Sends)*100, 2),  
     LICTOR = round(sum(LIClicks)/sum(LIOpens) * 100, 2)) %>%
-  select(Week, Impressions, Clicks, Bounces, Sessions, Swipes, ClickRatePct, SwipeUpRatePct, UPV, BounceRatePct, Av_TOP, ClickableCompRate, VTR, CTOR,OpenRate, Sends, ViewRate, ClickableCompletions, Completions, Opens, LIOpens, LIClicks, Engagements, LICTOR, EngRate, EngagementRate)
+  select(Week, Impressions, Clicks, Bounces, Sessions, Swipes, ClickRatePct, SwipeUpRatePct, UPV, BounceRatePct, Av_TOP, ClickableCompRate, VTR, CTOR,OpenRate, Sends, ViewRate, ClickableCompletions, Completions, Opens, LIOpens, LIClicks, Engagements, LICTOR, EngRate, EngagementRate, Views, Completions)
 
 
 ```
@@ -570,6 +570,83 @@ kable_styling("striped", full_width = F) %>%
 
 ```
 
+```{r Snapchat Video}
+SC_VID_PLT <- function(temp_F) {
+  PGSR <- IGD %>%  
+    ggplot(aes(x = Week, y = SwipeUpRatePct , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank()) +
+    geom_hline(yintercept = 0.83, linetype="dashed")
+  
+  PGImp <- IGD %>% 
+    ggplot(aes(x = Week, y = Impressions , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+    theme(axis.title.x=element_blank(),
+          axis.ticks.x=element_blank()) 
+  
+  
+  PGUPV <- IGD %>% 
+    ggplot(aes(x = Week, y = UPV , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())
+  
+  
+  
+  PGVR <- IGD %>% 
+    ggplot(aes(x = Week, y = ViewRate , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())
+  
+  PGVTR <- IGD %>% 
+    ggplot(aes(x = Week, y = VTR , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())
+  
+  
+  a <- ggarrange(PGImp, PGSR, PGUPV, PGVR,PGVTR, ncol=5, nrow=1, common.legend = TRUE, legend="right")
+  annotate_figure(a, text_grob(paste0( IGD$Code_Vendor, "_ ", IGD$Code_Medium, "_ ", IGD$Code_Product), color = "darkblue", face = "plain", size = 18, just = "right"))
+  
+  
+  
+}
+
+
+SC_VID_TBL <- function(temp_C){
+  TD <- kable(IGD %>%
+  group_by(Code_Audience) %>%
+        summarise(YTD_Impressions = prettyNum(round(sum(Impressions),0), big.mark = ","),
+                  Avg_Swipe_Rate = paste0(round(sum(Swipes)/sum(Impressions) * 100, 2), "%"),
+                  YTD_UPV = prettyNum(round(sum(UPV),0), big.mark = ","),
+                  Avg_BR = paste0(round(sum(Bounces)/sum(Sessions) * 100, 2), "%"),
+                  Avg_View_Rate = paste0(round(sum(Views)/sum(Impressions) * 100, 2), "%"),
+                  Avg_VTR = paste0(round(sum(Completions)/sum(Views) * 100, 2), "%"))) %>%
+kable_styling("striped", full_width = F) %>%
+  row_spec(0, angle = -30, font_size = 13)
+ return(TD)
+}
+
+```
+
 ## FB_DISP_UG {.tabset .tabset-fade}
 
 ### Seven Day
@@ -850,4 +927,154 @@ IGD <- FMVM %>%
 LI_TEXT_PLT(a)
 LI_TEXT_TBL(TD)
 
+```
+
+
+## SC_VID
+
+### Seven Day Report
+
+```{r}
+start_Date <- as.Date("2019-10-29")
+end_Date <- start_Date + 20
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "SC" & Code_Medium == "VID"  & Week >= start_Date & Week <= end_Date) 
+SC_VID_PLT(a)
+SC_VID_TBL(TD)
+```
+
+### Sixty Day Report
+
+```{r}
+start_Date <- as.Date("2019-10-29")
+end_Date <- start_Date + 60
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "SC" & Code_Medium == "VID"  & Week >= start_Date & Week <= end_Date) 
+SC_VID_PLT(a)
+SC_VID_TBL(TD)
+```
+
+### Year to Date
+
+```{r}
+start_Date <- as.Date("2019-10-29")
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "SC" & Code_Medium == "VID"  & Week >= start_Date & Week <= max(Week)) 
+SC_VID_PLT(a)
+SC_VID_TBL(TD)
+```
+
+
+```{r YouTube Video}
+YT_VID_PLT <- function(temp_F) {
+  PGCTR <- IGD %>%  
+    ggplot(aes(x = Week, y = ClickRatePct , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank()) +
+    geom_hline(yintercept = 0.0, linetype="dashed")
+  
+  PGImp <- IGD %>% 
+    ggplot(aes(x = Week, y = Impressions , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+    theme(axis.title.x=element_blank(),
+          axis.ticks.x=element_blank()) 
+  
+  
+  PGUPV <- IGD %>% 
+    ggplot(aes(x = Week, y = UPV , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())
+  
+  
+  
+  PGVR <- IGD %>% 
+    ggplot(aes(x = Week, y = ViewRate , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())+
+    geom_hline(yintercept = 20.0, linetype="dashed")
+  
+  PGVTR <- IGD %>% 
+    ggplot(aes(x = Week, y = VTR , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
+    geom_hline(yintercept = 20, linetype="dashed") +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())
+  
+  
+  a <- ggarrange(PGImp, PGCTR, PGUPV, PGVR,PGVTR, ncol=5, nrow=1, common.legend = TRUE, legend="right")
+  annotate_figure(a, text_grob(paste0( IGD$Code_Vendor, "_ ", IGD$Code_Medium, "_ ", IGD$Code_Product), color = "darkblue", face = "plain", size = 18, just = "right"))
+  
+  
+  
+}
+
+
+YT_VID_TBL <- function(temp_C){
+  TD <- kable(IGD %>%
+  group_by(Code_Audience) %>%
+        summarise(YTD_Impressions = prettyNum(round(sum(Impressions),0), big.mark = ","),
+                  ClickRatePct = paste0(round(sum(Clicks)/sum(Impressions) * 100, 2), "%"),
+                  YTD_UPV = prettyNum(round(sum(UPV),0), big.mark = ","),
+                  Avg_BR = paste0(round(sum(Bounces)/sum(Sessions) * 100, 2), "%"),
+                  Avg_View_Rate = paste0(round(sum(Views)/sum(Impressions) * 100, 2), "%"),
+                  Avg_VTR = paste0(round(sum(Completions)/sum(Views) * 100, 2), "%"))) %>%
+kable_styling("striped", full_width = F) %>%
+  row_spec(0, angle = -30, font_size = 13)
+ return(TD)
+}
+
+```
+
+
+## YouTube
+
+### Seven Day Report
+
+```{r}
+start_Date <- as.Date("2019-10-29")
+end_Date <- start_Date + 20
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "YT" & Code_Medium == "VID"  & Week >= start_Date & Week <= end_Date) 
+YT_VID_PLT(a)
+YT_VID_TBL(TD)
+```
+
+### Sixty Day Report
+
+```{r}
+start_Date <- as.Date("2019-10-29")
+end_Date <- start_Date + 60
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "YT" & Code_Medium == "VID"  & Week >= start_Date & Week <= end_Date) 
+YT_VID_PLT(a)
+YT_VID_TBL(TD)
+```
+
+### Year to Date
+
+```{r}
+start_Date <- as.Date("2019-10-29")
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "YT" & Code_Medium == "VID"  & Week >= start_Date & Week <= max(Week)) 
+YT_VID_PLT(a)
+YT_VID_TBL(TD)
 ```
