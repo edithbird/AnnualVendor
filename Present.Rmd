@@ -11,8 +11,8 @@ knitr::opts_chunk$set(
 	echo = FALSE,
 	message = FALSE,
 	warning = FALSE,
-	fig.width=6, 
-	fig.height=3
+	fig.width=8, 
+	fig.height=2
 )
 ```
 
@@ -82,6 +82,7 @@ FMVM <- FM %>%
     LICTOR = round(sum(LIClicks)/sum(LIOpens) * 100, 2)) %>%
   select(Week, Impressions, Clicks, Bounces, Sessions, Swipes, ClickRatePct, SwipeUpRatePct, UPV, BounceRatePct, Av_TOP, ClickableCompRate, VTR, CTOR,OpenRate, Sends, ViewRate, ClickableCompletions, Completions, Opens, LIOpens, LIClicks, Engagements, LICTOR, EngRate, EngagementRate)
 
+
 ```
 
 
@@ -142,15 +143,16 @@ FB_DISP_PLT <- function(temp_F) {
 
 
 FB_DISP_TBL <- function(temp_C){
-  TD <- IGD %>%
-  mutate(ReportingPeriod = "YTD") %>%
-  group_by(Code_Audience, ReportingPeriod) %>%
+  TD <- kable(IGD %>%
+  group_by(Code_Audience) %>%
         summarise(YTD_Impressions = prettyNum(round(sum(Impressions),0), big.mark = ","),
                   Avg_CTR = round(sum(Clicks)/sum(Impressions) * 100, 2),
                   YTD_UPV = prettyNum(round(sum(UPV),0), big.mark = ","),
                   Avg_BR = paste0(round(sum(Bounces)/sum(Sessions) * 100, 2), "%"),
-                  Avg_CTR = paste0(Avg_CTR, "%") )
- return(kable(TD))
+                  Avg_CTR = paste0(Avg_CTR, "%")))%>%
+kable_styling("striped", full_width = F) %>%
+  row_spec(0, angle = -30, font_size = 13)
+ return(TD)
 }
 
 ```
@@ -209,14 +211,16 @@ IG_DISP_PLT <- function(temp_F) {
 
 
 IG_DISP_TBL <- function(temp_C){
-  TD <- IGD %>%
-  mutate(ReportingPeriod = "YTD") %>%
-  group_by(Code_Audience, ReportingPeriod) %>%
+  TD <- kable(IGD %>%
+  group_by(Code_Audience) %>%
         summarise(YTD_Impressions = prettyNum(round(sum(Impressions),0), big.mark = ","),
                   Avg_CTR = round(sum(Clicks)/sum(Impressions) * 100, 2),
                   YTD_UPV = prettyNum(round(sum(UPV),0), big.mark = ","),
                   Avg_BR = paste0(round(sum(Bounces)/sum(Sessions) * 100, 2), "%"),
-                  Avg_CTR = paste0(Avg_CTR, "%") )
+                  Avg_CTR = paste0(Avg_CTR, "%"))) %>%
+kable_styling("striped", full_width = F) %>%
+  row_spec(0, angle = -30, font_size = 13)
+ return(TD)
  return(kable(TD))
 }
 
@@ -277,15 +281,16 @@ DBM_DISP_PLT <- function(temp_F) {
 
 
 DBM_DISP_TBL <- function(temp_C){
-  TD <- IGD %>%
-  mutate(ReportingPeriod = "YTD") %>%
-  group_by(Code_Audience, ReportingPeriod) %>%
+  TD <- kable(IGD %>%
+  group_by(Code_Audience) %>%
         summarise(YTD_Impressions = prettyNum(round(sum(Impressions),0), big.mark = ","),
                   Avg_CTR = round(sum(Clicks)/sum(Impressions) * 100, 2),
                   YTD_UPV = prettyNum(round(sum(UPV),0), big.mark = ","),
                   Avg_BR = paste0(round(sum(Bounces)/sum(Sessions) * 100, 2), "%"),
-                  Avg_CTR = paste0(Avg_CTR, "%") )
- return(kable(TD))
+                  Avg_CTR = paste0(Avg_CTR, "%")))%>%
+kable_styling("striped", full_width = F) %>%
+  row_spec(0, angle = -30, font_size = 13)
+ return(TD)
 }
 
 ```
@@ -345,15 +350,16 @@ PIN_DISP_PLT <- function(temp_F) {
 
 
 PIN_DISP_TBL <- function(temp_C){
-  TD <- IGD %>%
-  mutate(ReportingPeriod = "YTD") %>%
-  group_by(Code_Audience, ReportingPeriod) %>%
+  TD <- kable(IGD %>%
+  group_by(Code_Audience) %>%
         summarise(YTD_Impressions = prettyNum(round(sum(Impressions),0), big.mark = ","),
                   Avg_CTR = round(sum(Clicks)/sum(Impressions) * 100, 2),
                   YTD_UPV = prettyNum(round(sum(UPV),0), big.mark = ","),
                   Avg_BR = paste0(round(sum(Bounces)/sum(Sessions) * 100, 2), "%"),
-                  Avg_CTR = paste0(Avg_CTR, "%") )
- return(kable(TD))
+                  Avg_CTR = paste0(Avg_CTR, "%"))) %>%
+kable_styling("striped", full_width = F) %>%
+  row_spec(0, angle = -30, font_size = 13)
+ return(TD)
 }
 
 ```
@@ -414,15 +420,16 @@ GM_DISP_PLT <- function(temp_F) {
 
 
 GM_DISP_TBL <- function(temp_C){
-  TD <- IGD %>%
-  mutate(ReportingPeriod = "YTD") %>%
-  group_by(Code_Audience, ReportingPeriod) %>%
+  TD <- kable(IGD %>%
+  group_by(Code_Audience) %>%
         summarise(YTD_Impressions = prettyNum(round(sum(Impressions),0), big.mark = ","),
-                  Avg_CTR = round(sum(Clicks)/sum(Impressions) * 100, 2),
+                  Avg_CTR = paste0(round(sum(Clicks)/sum(Impressions) * 100, 2), "%"),
                   YTD_UPV = prettyNum(round(sum(UPV),0), big.mark = ","),
                   Avg_CTOR = paste0(round(sum(Opens)/sum(Clicks) * 100, 2), "%"),
-                  Avg_CTR = paste0(Avg_CTR, "%") )
- return(kable(TD))
+                  Avg_BR = paste0(round(sum(Bounces)/sum(Sessions) * 100, 2), "%"))) %>%
+kable_styling("striped", full_width = F) %>%
+  row_spec(0, angle = -30, font_size = 13)
+ return(TD)
 }
 
 ```
@@ -482,26 +489,96 @@ LI_DISP_PLT <- function(temp_F) {
 
 
 LI_DISP_TBL <- function(temp_C){
-  TD <- IGD %>%
-  mutate(ReportingPeriod = "YTD") %>%
-  group_by(Code_Product, ReportingPeriod) %>%
+  TD <- kable(IGD %>%
+  group_by(Code_Product) %>%
         summarise(YTD_Impressions = prettyNum(round(sum(Impressions),0), big.mark = ","),
                   Avg_CTR = round(sum(Clicks)/sum(Impressions) * 100, 2),
                   YTD_UPV = prettyNum(round(sum(UPV),0), big.mark = ","),
-                  Avg_BR = paste0(round(sum(Bounces)/sum(Sessions) * 100, 2), "%"),
-                  Avg_CTR = paste0(Avg_CTR, "%") )
- return(kable(TD))
+                  Avg_BR = paste0(round(sum(Bounces)/sum(Sessions) * 100, 2), "%")))%>%
+kable_styling("striped", full_width = F) %>%
+  row_spec(0, angle = -30, font_size = 13)
+ return(TD)
 }
 
 ```
 
-## FB_DISP_UG
+```{r LI TEXT}
+LI_TEXT_PLT <- function(temp_F) {
+  PGOR <- IGD %>%  
+    ggplot(aes(x = Week, y = ClickRatePct , color = Code_Product)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank()) +
+    geom_hline(yintercept = 25, linetype="dashed")
+  
+  PGSend <- IGD %>% 
+    ggplot(aes(x = Week, y = Sends , color = Code_Product)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+    theme(axis.title.x=element_blank(),
+          axis.ticks.x=element_blank()) 
+  
+  
+  PGUPV <- IGD %>% 
+    ggplot(aes(x = Week, y = UPV , color = Code_Product)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())
+  
+  
+  
+  PGCTOR <- IGD %>% 
+    ggplot(aes(x = Week, y = LICTOR , color = Code_Product)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())+
+    geom_hline(yintercept = 2.5, linetype="dashed")
+  
+  
+  a <- ggarrange(PGSend, PGOR, PGUPV, PGCTOR, ncol=4, nrow=1, common.legend = TRUE, legend="right")
+  annotate_figure(a, text_grob(paste0( IGD$Code_Vendor, "_ ", IGD$Code_Medium, "_ ", IGD$Code_Product), color = "darkblue", face = "plain", size = 18, just = "right"))
+  
+  
+  
+}
+
+
+LI_TEXT_TBL <- function(temp_C){
+  TD <- kable(IGD %>%
+  group_by(Code_Product) %>%
+        summarise(YTD_Sends = prettyNum(round(sum(Impressions),0), big.mark = ","),
+                  Avg_OR = round(sum(Clicks)/sum(Impressions) * 100, 2),
+                  YTD_UPV = prettyNum(round(sum(UPV),0), big.mark = ","),
+                  Avg_CTOR = paste0(round(sum(LIClicks)/sum(Clicks) * 100, 2), "%")))%>%
+kable_styling("striped", full_width = F) %>%
+  row_spec(0, angle = -30, font_size = 13)
+ return(TD)
+}
+
+```
+
+## FB_DISP_UG {.tabset .tabset-fade}
+
+### Seven Day
 
 ```{r}
-start_Date <- as.Date("2019-08-01")
-end_Date <- as.Date("2019-09-17")
+start_Date <- as.Date("2019-08-15")
+end_Date <- start_Date+20
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "FB" & Code_Medium == "DISP" & Code_Product == "UG" & Week >= start_Date & Week <= end_Date) 
+  filter(Code_Vendor == "FB" & Code_Medium == "DISP" & Code_Audience == "HS" & Week >= start_Date & Week <= end_Date) 
 
 
 
@@ -511,21 +588,78 @@ FB_DISP_TBL(TD)
 
 ```
 
-## IG_DISP_UG
+### Sixty Day
+
 
 ```{r}
-start_Date <- as.Date("2019-08-01")
-end_Date <- as.Date("2019-09-17")
+start_Date <- as.Date("2019-08-15")
+end_Date <- start_Date+60
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "FB" & Code_Medium == "DISP" & Code_Audience == "HS" & Week >= start_Date & Week <= end_Date) 
+
+
+
+
+FB_DISP_PLT(a)
+FB_DISP_TBL(TD)
+
+```
+
+### Year to Date
+
+```{r}
+
+start_Date <- as.Date("2019-08-15")
+#end_Date <- max(FMVMWeek)
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "FB" & Code_Medium == "DISP" & Code_Audience == "HS" & Week >= start_Date & Week <= max(Week)) 
+
+
+
+
+FB_DISP_PLT(a)
+FB_DISP_TBL(TD)
+
+```
+
+## IG_DISP_UG{.tabset .tabset-fade}
+
+### Seven Day
+
+```{r}
+start_Date <- as.Date("2019-08-15")
+end_Date <- start_Date + 20
 IGD <- FMVM %>% 
   filter(Code_Vendor == "IG" & Code_Medium == "DISP" & Code_Product == "UG" & Week >= start_Date & Week <= end_Date)
 IG_DISP_PLT(a)
 IG_DISP_TBL(TD)
-
-
 ```
 
+### Sixty Day
 
-## DBM_DISP_UG
+```{r}
+start_Date <- as.Date("2019-08-15")
+end_Date <- start_Date + 60
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "IG" & Code_Medium == "DISP" & Code_Product == "UG" & Week >= start_Date & Week <= end_Date)
+IG_DISP_PLT(a)
+IG_DISP_TBL(TD)
+```
+
+### Year to Date
+
+```{r}
+start_Date <- as.Date("2019-08-15")
+
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "IG" & Code_Medium == "DISP" & Code_Product == "UG" & Week >= start_Date & Week <= max(Week))
+IG_DISP_PLT(a)
+IG_DISP_TBL(TD)
+```
+
+## DBM_DISP_UG{.tabset .tabset-fade}
+
+### Seven Day
 
 ```{r}
 start_Date <- as.Date("2019-08-01")
@@ -540,22 +674,76 @@ DBM_DISP_PLT(a)
 DBM_DISP_TBL(TD)
 ```
 
-## PIN_DISP_UG
+### Sixty Day
 
 ```{r}
 start_Date <- as.Date("2019-08-01")
-end_Date <- as.Date("2019-09-17")
+end_Date <- start_Date + 60
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "DBM" & Code_Medium == "DISP" & Code_Product == "UG"& Week >= start_Date & Week <= end_Date) 
+
+
+
+
+DBM_DISP_PLT(a)
+DBM_DISP_TBL(TD)
+```
+
+### Year to Date
+
+```{r}
+start_Date <- as.Date("2019-08-01")
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "DBM" & Code_Medium == "DISP" & Code_Product == "UG"& Week >= start_Date & Week <= max(Week)) 
+
+
+
+
+DBM_DISP_PLT(a)
+DBM_DISP_TBL(TD)
+```
+
+## PIN_DISP_UG{.tabset .tabset-fade}
+
+### Seven Day Report
+
+```{r}
+start_Date <- as.Date("2019-09-01")
+end_Date <- start_Date +20
 IGD <- FMVM %>% 
   filter(Code_Vendor == "PIN" & Code_Medium == "DISP" & Code_Product == "UG" & Week >= start_Date & Week <= end_Date) 
 PIN_DISP_PLT(a)
 PIN_DISP_TBL(TD)
 ```
 
-## GM_TEXT
+### Sixty Day Report
+
+```{r}
+start_Date <- as.Date("2019-09-01")
+end_Date <- start_Date +60
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "PIN" & Code_Medium == "DISP" & Code_Product == "UG" & Week >= start_Date & Week <= end_Date) 
+PIN_DISP_PLT(a)
+PIN_DISP_TBL(TD)
+```
+
+### Year to Date 
+
+```{r}
+start_Date <- as.Date("2019-09-01")
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "PIN" & Code_Medium == "DISP" & Code_Product == "UG" & Week >= start_Date & Week <= max(Week)) 
+PIN_DISP_PLT(a)
+PIN_DISP_TBL(TD)
+```
+
+## GM_TEXT{.tabset .tabset-fade}
+
+### Seven Day Report
 
 ```{r}
 start_Date <- as.Date("2019-08-01")
-end_Date <- as.Date("2019-12-17")
+end_Date <- start_Date +20
 IGD <- FMVM %>% 
   filter(Code_Vendor == "GM"  & Week >= start_Date & Week <= end_Date) 
 
@@ -567,15 +755,99 @@ GM_DISP_TBL(TD)
 
 ```
 
-## LI_DISP
-
+### Sixty Day
 
 ```{r}
 start_Date <- as.Date("2019-08-01")
-end_Date <- as.Date("2020-02-17")
+end_Date <- start_Date +60
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "GM"  & Week >= start_Date & Week <= end_Date) 
+GM_DISP_PLT(a)
+GM_DISP_TBL(TD)
+```
+
+
+### Year to Date
+
+```{r}
+start_Date <- as.Date("2019-08-01")
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "GM"  & Week >= start_Date & Week <= max(Week)) 
+GM_DISP_PLT(a)
+GM_DISP_TBL(TD)
+
+```
+
+
+
+## LI_DISP{.tabset .tabset-fade}
+
+### Seven Day Report
+
+```{r}
+start_Date <- as.Date("2019-08-01")
+end_Date <- start_Date + 20
 IGD <- FMVM %>% 
   filter(Code_Vendor == "LI" & Code_Medium == "DISP"  & Week >= start_Date & Week <= end_Date) 
 LI_DISP_PLT(a)
 LI_DISP_TBL(TD)
+```
+
+### Sixty Day Report
+
+```{r}
+start_Date <- as.Date("2019-08-01")
+end_Date <- start_Date + 60
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "LI" & Code_Medium == "DISP"  & Week >= start_Date & Week <= end_Date) 
+LI_DISP_PLT(a)
+LI_DISP_TBL(TD)
+```
+
+### Year to Date
+
+```{r}
+start_Date <- as.Date("2019-08-01")
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "LI" & Code_Medium == "DISP"  & Week >= start_Date & Week <= max(Week)) 
+LI_DISP_PLT(a)
+LI_DISP_TBL(TD)
+```
+
+
+## LI_TEXT{.tabset .tabset-fade}
+
+### Phase 1
+
+```{r}
+start_Date <- as.Date("2019-08-04")
+end_Date <- start_Date + 30
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "LI" & Code_Medium == "TEXT"  & Week >= start_Date & Week <= end_Date & Code_Product != "DC") 
+LI_TEXT_PLT(a)
+LI_TEXT_TBL(TD)
+
+```
+
+### Phase 2
+
+```{r}
+start_Date <- as.Date("2019-09-27")
+end_Date <- start_Date + 80
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "LI" & Code_Medium == "TEXT"  & Week >= start_Date & Week <= end_Date) 
+LI_TEXT_PLT(a)
+LI_TEXT_TBL(TD)
+
+```
+
+### Year to Date
+
+```{r}
+start_Date <- as.Date("2019-08-27")
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "LI" & Code_Medium == "TEXT"  & Week >= start_Date & Week <= max(Week)) 
+LI_TEXT_PLT(a)
+LI_TEXT_TBL(TD)
 
 ```
