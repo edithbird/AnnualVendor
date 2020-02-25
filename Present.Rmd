@@ -1034,6 +1034,20 @@ kable_styling("striped", full_width = F) %>%
 }
 
 ```
+
+## Undergraduate Program
+
+Vendors:
+
+* Facebook - Display, Carousel, Video
+* Instagram - Display, Carousel, Video, Stories
+* DoubleClick - Display
+* Pinterest - Display
+* Snapchat - Video
+* Twitter - Tweets
+* YouTube _Video
+
+
 ## FB_DISP_UG {.tabset .tabset-fade}
 
 ### Seven Day
@@ -1042,14 +1056,14 @@ kable_styling("striped", full_width = F) %>%
 start_Date <- as.Date("2019-08-15")
 end_Date <- start_Date+20
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "FB" & Code_Medium == "DISP" & Code_Audience == "HS" & Week >= start_Date & Week <= end_Date) 
-
-
-
-
+  filter(
+    Code_Vendor == "FB" & 
+      Code_Medium == "DISP" &
+      Code_Audience == "HS" & 
+      Week >= start_Date & 
+      Week <= end_Date) 
 FB_DISP_PLT(a)
 FB_DISP_TBL(TD)
-
 ```
 
 ### Sixty Day
@@ -1057,34 +1071,85 @@ FB_DISP_TBL(TD)
 
 ```{r}
 start_Date <- as.Date("2019-08-15")
-end_Date <- start_Date+60
+end_Date <- start_Date + 60
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "FB" & Code_Medium == "DISP" & Code_Audience == "HS" & Week >= start_Date & Week <= end_Date) 
-
-
-
-
+  filter(
+    Code_Vendor == "FB" & 
+      Code_Medium == "DISP" &
+      Code_Audience == "HS" & 
+      Week >= start_Date & 
+      Week <= end_Date) 
 FB_DISP_PLT(a)
 FB_DISP_TBL(TD)
-
 ```
 
 ### Year to Date
 
 ```{r}
-
 start_Date <- as.Date("2019-08-15")
 #end_Date <- max(FMVMWeek)
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "FB" & Code_Medium == "DISP" & Code_Audience == "HS" & Week >= start_Date & Week <= max(Week)) 
-
-
-
-
+  filter(
+    Code_Vendor == "FB" & 
+    Code_Medium == "DISP" &
+    Code_Audience == "HS" &
+    Week >= start_Date & 
+    Week <= max(Week)) 
 FB_DISP_PLT(a)
 FB_DISP_TBL(TD)
-
 ```
+
+## FB_CAR_UG {.tabset .tabset-fade}
+
+### Seven Day
+
+```{r}
+start_Date <- as.Date("2019-08-15")
+end_Date <- start_Date + 20
+IGD <- FMVM %>% 
+  filter(
+    Code_Vendor == "FB" & 
+      Code_Medium == "CAR" &
+      Code_Product == "UG" & 
+      Week >= start_Date & 
+      Week <= end_Date) 
+FB_DISP_PLT(a)
+FB_DISP_TBL(TD)
+```
+
+### Sixty Day
+
+
+```{r}
+start_Date <- as.Date("2019-08-15")
+end_Date <- start_Date + 60
+IGD <- FMVM %>% 
+  filter(
+    Code_Vendor == "FB" & 
+      Code_Medium == "CAR" &
+      Code_Audience == "HS" & 
+      Week >= start_Date & 
+      Week <= end_Date) 
+FB_DISP_PLT(a)
+FB_DISP_TBL(TD)
+```
+
+### Year to Date
+
+```{r}
+start_Date <- as.Date("2019-08-15")
+#end_Date <- max(FMVMWeek)
+IGD <- FMVM %>% 
+  filter(
+    Code_Vendor == "FB" & 
+    Code_Medium == "CAR" &
+    Code_Audience == "HS" &
+    Week >= start_Date & 
+    Week <= max(Week)) 
+FB_DISP_PLT(a)
+FB_DISP_TBL(TD)
+```
+
 
 ## IG_DISP_UG{.tabset .tabset-fade}
 
@@ -1094,7 +1159,11 @@ FB_DISP_TBL(TD)
 start_Date <- as.Date("2019-08-15")
 end_Date <- start_Date + 20
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "IG" & Code_Medium == "DISP" & Code_Product == "UG" & Week >= start_Date & Week <= end_Date)
+  filter(Code_Vendor == "IG" &
+         Code_Medium == "DISP" &
+         Code_Product == "UG" & 
+         Week >= start_Date & 
+         Week <= end_Date)
 IG_DISP_PLT(a)
 IG_DISP_TBL(TD)
 ```
@@ -1104,8 +1173,12 @@ IG_DISP_TBL(TD)
 ```{r}
 start_Date <- as.Date("2019-08-15")
 end_Date <- start_Date + 60
-IGD <- FMVM %>% 
-  filter(Code_Vendor == "IG" & Code_Medium == "DISP" & Code_Product == "UG" & Week >= start_Date & Week <= end_Date)
+IGD <- FMVM %>%
+  filter(Code_Vendor == "IG" &
+           Code_Medium == "DISP" &
+           Code_Product == "UG" & 
+           Week >= start_Date & 
+           Week <= end_Date)
 IG_DISP_PLT(a)
 IG_DISP_TBL(TD)
 ```
@@ -1114,12 +1187,67 @@ IG_DISP_TBL(TD)
 
 ```{r}
 start_Date <- as.Date("2019-08-15")
-
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "IG" & Code_Medium == "DISP" & Code_Product == "UG" & Week >= start_Date & Week <= max(Week))
+  filter(Code_Vendor == "IG" &
+           Code_Medium == "DISP" &
+           Code_Product == "UG" & 
+           Week >= start_Date & 
+           Week <= max(Week))
 IG_DISP_PLT(a)
 IG_DISP_TBL(TD)
 ```
+
+## IG_CAR_UG {.tabset .tabset-fade}
+
+### Seven Day
+
+```{r}
+start_Date <- as.Date("2019-08-15")
+end_Date <- start_Date + 20
+IGD <- FMVM %>% 
+  filter(
+    Code_Vendor == "IG" & 
+      Code_Medium == "CAR" &
+      Code_Product == "UG" & 
+      Week >= start_Date & 
+      Week <= end_Date) 
+FB_DISP_PLT(a)
+FB_DISP_TBL(TD)
+```
+
+### Sixty Day
+
+
+```{r}
+start_Date <- as.Date("2019-08-15")
+end_Date <- start_Date + 60
+IGD <- FMVM %>% 
+  filter(
+    Code_Vendor == "IG" & 
+      Code_Medium == "CAR" &
+      Code_Audience == "HS" & 
+      Week >= start_Date & 
+      Week <= end_Date) 
+FB_DISP_PLT(a)
+FB_DISP_TBL(TD)
+```
+
+### Year to Date
+
+```{r}
+start_Date <- as.Date("2019-08-15")
+#end_Date <- max(FMVMWeek)
+IGD <- FMVM %>% 
+  filter(
+    Code_Vendor == "IG" & 
+    Code_Medium == "CAR" &
+    Code_Audience == "HS" &
+    Week >= start_Date & 
+    Week <= max(Week)) 
+FB_DISP_PLT(a)
+FB_DISP_TBL(TD)
+```
+
 
 ## DBM_DISP_UG{.tabset .tabset-fade}
 
@@ -1129,11 +1257,11 @@ IG_DISP_TBL(TD)
 start_Date <- as.Date("2019-08-01")
 end_Date <- as.Date("2019-09-17")
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "DBM" & Code_Medium == "DISP" & Code_Product == "UG"& Week >= start_Date & Week <= end_Date) 
-
-
-
-
+  filter(Code_Vendor == "DBM" &
+           Code_Medium == "DISP" &
+           Code_Product == "UG" & 
+           Week >= start_Date & 
+           Week <= end_Date) 
 DBM_DISP_PLT(a)
 DBM_DISP_TBL(TD)
 ```
@@ -1144,11 +1272,11 @@ DBM_DISP_TBL(TD)
 start_Date <- as.Date("2019-08-01")
 end_Date <- start_Date + 60
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "DBM" & Code_Medium == "DISP" & Code_Product == "UG"& Week >= start_Date & Week <= end_Date) 
-
-
-
-
+  filter(Code_Vendor == "DBM" &
+           Code_Medium == "DISP" &
+           Code_Product == "UG"& 
+           Week >= start_Date & 
+           Week <= end_Date) 
 DBM_DISP_PLT(a)
 DBM_DISP_TBL(TD)
 ```
@@ -1158,11 +1286,11 @@ DBM_DISP_TBL(TD)
 ```{r}
 start_Date <- as.Date("2019-08-01")
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "DBM" & Code_Medium == "DISP" & Code_Product == "UG"& Week >= start_Date & Week <= max(Week)) 
-
-
-
-
+  filter(Code_Vendor == "DBM" &
+           Code_Medium == "DISP" &
+           Code_Product == "UG"& 
+           Week >= start_Date & 
+           Week <= max(Week)) 
 DBM_DISP_PLT(a)
 DBM_DISP_TBL(TD)
 ```
@@ -1175,7 +1303,11 @@ DBM_DISP_TBL(TD)
 start_Date <- as.Date("2019-09-01")
 end_Date <- start_Date +20
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "PIN" & Code_Medium == "DISP" & Code_Product == "UG" & Week >= start_Date & Week <= end_Date) 
+  filter(Code_Vendor == "PIN" &
+           Code_Medium == "DISP" &
+           Code_Product == "UG" & 
+           Week >= start_Date & 
+           Week <= end_Date) 
 PIN_DISP_PLT(a)
 PIN_DISP_TBL(TD)
 ```
@@ -1186,7 +1318,11 @@ PIN_DISP_TBL(TD)
 start_Date <- as.Date("2019-09-01")
 end_Date <- start_Date +60
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "PIN" & Code_Medium == "DISP" & Code_Product == "UG" & Week >= start_Date & Week <= end_Date) 
+  filter(Code_Vendor == "PIN" &
+           Code_Medium == "DISP" &
+           Code_Product == "UG" & 
+           Week >= start_Date & 
+           Week <= end_Date) 
 PIN_DISP_PLT(a)
 PIN_DISP_TBL(TD)
 ```
@@ -1196,7 +1332,11 @@ PIN_DISP_TBL(TD)
 ```{r}
 start_Date <- as.Date("2019-09-01")
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "PIN" & Code_Medium == "DISP" & Code_Product == "UG" & Week >= start_Date & Week <= max(Week)) 
+  filter(Code_Vendor == "PIN" &
+           Code_Medium == "DISP" &
+           Code_Product == "UG" & 
+           Week >= start_Date & 
+           Week <= max(Week)) 
 PIN_DISP_PLT(a)
 PIN_DISP_TBL(TD)
 ```
@@ -1209,7 +1349,9 @@ PIN_DISP_TBL(TD)
 start_Date <- as.Date("2019-08-01")
 end_Date <- start_Date +20
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "GM"  & Week >= start_Date & Week <= end_Date) 
+  filter(Code_Vendor == "GM"  & 
+           Week >= start_Date & 
+           Week <= end_Date) 
 
 
 
@@ -1225,7 +1367,9 @@ GM_DISP_TBL(TD)
 start_Date <- as.Date("2019-08-01")
 end_Date <- start_Date +60
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "GM"  & Week >= start_Date & Week <= end_Date) 
+  filter(Code_Vendor == "GM"  & 
+           Week >= start_Date & 
+           Week <= end_Date) 
 GM_DISP_PLT(a)
 GM_DISP_TBL(TD)
 ```
@@ -1236,7 +1380,9 @@ GM_DISP_TBL(TD)
 ```{r}
 start_Date <- as.Date("2019-08-01")
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "GM"  & Week >= start_Date & Week <= max(Week)) 
+  filter(Code_Vendor == "GM"  & 
+           Week >= start_Date & 
+           Week <= max(Week)) 
 GM_DISP_PLT(a)
 GM_DISP_TBL(TD)
 
@@ -1252,7 +1398,10 @@ GM_DISP_TBL(TD)
 start_Date <- as.Date("2019-08-01")
 end_Date <- start_Date + 20
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "LI" & Code_Medium == "DISP"  & Week >= start_Date & Week <= end_Date) 
+  filter(Code_Vendor == "LI" &
+           Code_Medium == "DISP"  &
+           Week >= start_Date & 
+           Week <= end_Date) 
 LI_DISP_PLT(a)
 LI_DISP_TBL(TD)
 ```
@@ -1263,7 +1412,10 @@ LI_DISP_TBL(TD)
 start_Date <- as.Date("2019-08-01")
 end_Date <- start_Date + 60
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "LI" & Code_Medium == "DISP"  & Week >= start_Date & Week <= end_Date) 
+  filter(Code_Vendor == "LI" &
+           Code_Medium == "DISP"  &
+           Week >= start_Date & 
+           Week <= end_Date) 
 LI_DISP_PLT(a)
 LI_DISP_TBL(TD)
 ```
@@ -1273,7 +1425,10 @@ LI_DISP_TBL(TD)
 ```{r}
 start_Date <- as.Date("2019-08-01")
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "LI" & Code_Medium == "DISP"  & Week >= start_Date & Week <= max(Week)) 
+  filter(Code_Vendor == "LI" &
+           Code_Medium == "DISP"  &
+           Week >= start_Date & 
+           Week <= max(Week)) 
 LI_DISP_PLT(a)
 LI_DISP_TBL(TD)
 ```
@@ -1287,7 +1442,11 @@ LI_DISP_TBL(TD)
 start_Date <- as.Date("2019-08-04")
 end_Date <- start_Date + 30
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "LI" & Code_Medium == "TEXT"  & Week >= start_Date & Week <= end_Date & Code_Product != "DC") 
+  filter(Code_Vendor == "LI" &
+           Code_Medium == "TEXT"  &
+           Week >= start_Date & 
+           Week <= end_Date &
+           Code_Product != "DC") 
 LI_TEXT_PLT(a)
 LI_TEXT_TBL(TD)
 
@@ -1299,7 +1458,10 @@ LI_TEXT_TBL(TD)
 start_Date <- as.Date("2019-09-27")
 end_Date <- start_Date + 80
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "LI" & Code_Medium == "TEXT"  & Week >= start_Date & Week <= end_Date) 
+  filter(Code_Vendor == "LI" &
+           Code_Medium == "TEXT"  &
+           Week >= start_Date & 
+           Week <= end_Date) 
 LI_TEXT_PLT(a)
 LI_TEXT_TBL(TD)
 
@@ -1310,7 +1472,10 @@ LI_TEXT_TBL(TD)
 ```{r}
 start_Date <- as.Date("2019-08-27")
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "LI" & Code_Medium == "TEXT"  & Week >= start_Date & Week <= max(Week)) 
+  filter(Code_Vendor == "LI" &
+           Code_Medium == "TEXT"  &
+           Week >= start_Date & 
+           Week <= max(Week)) 
 LI_TEXT_PLT(a)
 LI_TEXT_TBL(TD)
 
@@ -1325,7 +1490,10 @@ LI_TEXT_TBL(TD)
 start_Date <- as.Date("2019-10-29")
 end_Date <- start_Date + 20
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "SC" & Code_Medium == "VID"  & Week >= start_Date & Week <= end_Date) 
+  filter(Code_Vendor == "SC" &
+           Code_Medium == "VID"  & 
+           Week >= start_Date & 
+           Week <= end_Date) 
 SC_VID_PLT(a)
 SC_VID_TBL(TD)
 ```
@@ -1336,7 +1504,10 @@ SC_VID_TBL(TD)
 start_Date <- as.Date("2019-10-29")
 end_Date <- start_Date + 60
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "SC" & Code_Medium == "VID"  & Week >= start_Date & Week <= end_Date) 
+  filter(Code_Vendor == "SC" &
+           Code_Medium == "VID"  & 
+           Week >= start_Date & 
+           Week <= end_Date) 
 SC_VID_PLT(a)
 SC_VID_TBL(TD)
 ```
@@ -1346,7 +1517,10 @@ SC_VID_TBL(TD)
 ```{r}
 start_Date <- as.Date("2019-10-29")
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "SC" & Code_Medium == "VID"  & Week >= start_Date & Week <= max(Week)) 
+  filter(Code_Vendor == "SC" &
+           Code_Medium == "VID"  & 
+           Week >= start_Date & 
+           Week <= max(Week)) 
 SC_VID_PLT(a)
 SC_VID_TBL(TD)
 ```
@@ -1360,7 +1534,10 @@ SC_VID_TBL(TD)
 start_Date <- as.Date("2019-10-29")
 end_Date <- start_Date + 20
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "YT" & Code_Medium == "VID"  & Week >= start_Date & Week <= end_Date) 
+  filter(Code_Vendor == "YT" &
+           Code_Medium == "VID" & 
+           Week >= start_Date & 
+           Week <= end_Date) 
 YT_VID_PLT(a)
 YT_VID_TBL(TD)
 ```
@@ -1371,7 +1548,10 @@ YT_VID_TBL(TD)
 start_Date <- as.Date("2019-10-29")
 end_Date <- start_Date + 60
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "YT" & Code_Medium == "VID"  & Week >= start_Date & Week <= end_Date) 
+  filter(Code_Vendor == "YT" &
+           Code_Medium == "VID"  & 
+           Week >= start_Date & 
+           Week <= end_Date) 
 YT_VID_PLT(a)
 YT_VID_TBL(TD)
 ```
@@ -1381,7 +1561,10 @@ YT_VID_TBL(TD)
 ```{r}
 start_Date <- as.Date("2019-10-29")
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "YT" & Code_Medium == "VID"  & Week >= start_Date & Week <= max(Week)) 
+  filter(Code_Vendor == "YT" &
+           Code_Medium == "VID"  & 
+           Week >= start_Date & 
+           Week <= max(Week)) 
 YT_VID_PLT(a)
 YT_VID_TBL(TD)
 ```
@@ -1394,7 +1577,11 @@ YT_VID_TBL(TD)
 start_Date <- as.Date("2019-08-15")
 end_Date <- start_Date+20
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "FB" & Code_Medium == "VID" & Code_Audience == "HS" & Week >= start_Date & Week <= end_Date) 
+  filter(Code_Vendor == "FB" &
+           Code_Medium == "VID" &
+           Code_Audience == "HS" & 
+           Week >= start_Date & 
+           Week <= end_Date) 
 
 
 
@@ -1411,11 +1598,11 @@ FB_VID_TBL(TD)
 start_Date <- as.Date("2019-08-15")
 end_Date <- start_Date+60
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "FB" & Code_Medium == "VID" & Code_Audience == "HS" & Week >= start_Date & Week <= end_Date) 
-
-
-
-
+  filter(Code_Vendor == "FB" &
+           Code_Medium == "VID" &
+           Code_Audience == "HS" & 
+           Week >= start_Date & 
+           Week <= end_Date) 
 FB_VID_PLT(a)
 FB_VID_TBL(TD)
 
@@ -1428,11 +1615,11 @@ FB_VID_TBL(TD)
 start_Date <- as.Date("2019-08-15")
 #end_Date <- max(FMVMWeek)
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "FB" & Code_Medium == "VID" & Code_Audience == "HS" & Week >= start_Date & Week <= max(Week)) 
-
-
-
-
+  filter(Code_Vendor == "FB" &
+           Code_Medium == "VID" &
+           Code_Audience == "HS" & 
+           Week >= start_Date & 
+           Week <= max(Week)) 
 FB_VID_PLT(a)
 FB_VID_TBL(TD)
 
@@ -1446,11 +1633,11 @@ FB_VID_TBL(TD)
 start_Date <- as.Date("2019-08-15")
 end_Date <- start_Date+20
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "IG" & Code_Medium == "VID" & Code_Audience == "HS" & Week >= start_Date & Week <= end_Date) 
-
-
-
-
+  filter(Code_Vendor == "IG" &
+           Code_Medium == "VID" &
+           Code_Audience == "HS" & 
+           Week >= start_Date & 
+           Week <= end_Date) 
 IG_VID_PLT(a)
 IG_VID_TBL(TD)
 
@@ -1463,7 +1650,11 @@ IG_VID_TBL(TD)
 start_Date <- as.Date("2019-08-15")
 end_Date <- start_Date+60
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "IG" & Code_Medium == "VID" & Code_Audience == "HS" & Week >= start_Date & Week <= end_Date) 
+  filter(Code_Vendor == "IG" &
+           Code_Medium == "VID" &
+           Code_Audience == "HS" & 
+           Week >= start_Date & 
+           Week <= end_Date) 
 IG_VID_PLT(a)
 IG_VID_TBL(TD)
 
@@ -1476,7 +1667,11 @@ IG_VID_TBL(TD)
 start_Date <- as.Date("2019-08-15")
 #end_Date <- max(FMVMWeek)
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "IG" & Code_Medium == "VID" & Code_Audience == "HS" & Week >= start_Date & Week <= max(Week)) 
+  filter(Code_Vendor == "IG" &
+           Code_Medium == "VID" &
+           Code_Audience == "HS" & 
+           Week >= start_Date & 
+           Week <= max(Week)) 
 IG_VID_PLT(a)
 IG_VID_TBL(TD)
 
@@ -1490,7 +1685,11 @@ IG_VID_TBL(TD)
 start_Date <- as.Date("2019-08-15")
 end_Date <- start_Date+20
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "DBM" & Code_Medium == "VID" & Code_Audience == "HS" & Week >= start_Date & Week <= end_Date) 
+  filter(Code_Vendor == "DBM" &
+           Code_Medium == "VID" &
+           Code_Audience == "HS" & 
+           Week >= start_Date & 
+           Week <= end_Date) 
 DBM_VID_PLT(a)
 DBM_VID_TBL(TD)
 ```
@@ -1502,7 +1701,11 @@ DBM_VID_TBL(TD)
 start_Date <- as.Date("2019-08-15")
 end_Date <- start_Date+60
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "IG" & Code_Medium == "VID" & Code_Audience == "HS" & Week >= start_Date & Week <= end_Date) 
+  filter(Code_Vendor == "IG" &
+           Code_Medium == "VID" &
+           Code_Audience == "HS" & 
+           Week >= start_Date & 
+           Week <= end_Date) 
 DBM_VID_PLT(a)
 DBM_VID_TBL(TD)
 ```
@@ -1514,7 +1717,11 @@ DBM_VID_TBL(TD)
 start_Date <- as.Date("2019-08-15")
 #end_Date <- max(FMVMWeek)
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "DBM" & Code_Medium == "VID" & Code_Audience == "HS" & Week >= start_Date & Week <= max(Week)) 
+  filter(Code_Vendor == "DBM" &
+           Code_Medium == "VID" &
+           Code_Audience == "HS" & 
+           Week >= start_Date & 
+           Week <= max(Week)) 
 DBM_VID_PLT(a)
 DBM_VID_TBL(TD)
 ```
@@ -1529,7 +1736,10 @@ DBM_VID_TBL(TD)
 start_Date <- as.Date("2019-10-29")
 end_Date <- start_Date + 20
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "TW" & Code_Medium == "DISP"  & Week >= start_Date & Week <= end_Date) 
+  filter(Code_Vendor == "TW" &
+           Code_Medium == "DISP"  &
+           Week >= start_Date & 
+           Week <= end_Date) 
 TW_DISP_PLT(a)
 TW_DISP_TBL(TD)
 ```
@@ -1540,7 +1750,10 @@ TW_DISP_TBL(TD)
 start_Date <- as.Date("2019-10-29")
 end_Date <- start_Date + 60
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "TW" & Code_Medium == "DISP"  & Week >= start_Date & Week <= end_Date) 
+  filter(Code_Vendor == "TW" &
+           Code_Medium == "DISP"  &
+           Week >= start_Date & 
+           Week <= end_Date) 
 TW_DISP_PLT(a)
 TW_DISP_TBL(TD)
 ```
@@ -1550,7 +1763,10 @@ TW_DISP_TBL(TD)
 ```{r}
 start_Date <- as.Date("2019-10-29")
 IGD <- FMVM %>% 
-  filter(Code_Vendor == "TW" & Code_Medium == "DISP"  & Week >= start_Date & Week <= max(Week)) 
+  filter(Code_Vendor == "TW" &
+           Code_Medium == "DISP"  &
+           Week >= start_Date & 
+           Week <= max(Week)) 
 TW_DISP_PLT(a)
 TW_DISP_TBL(TD)
 ```
