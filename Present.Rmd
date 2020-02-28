@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Agency Reports"
 author: "Office of Marketing and Brand Management"
 date: "2/20/2020"
 output: slidy_presentation
@@ -36,8 +36,8 @@ library(pander)
 
 
 ```{r}
-# FM <- read.csv("file:///Z:/DAA/Marketing/MKT_output.csv", header = T, stringsAsFactors = F)
-FM <- read.csv("C:/Users/christine.iyer/Box/AnnualCampaignVendorPerformance/MKT_output.csv", header = T, stringsAsFactors = F)
+FM <- read.csv("file:///Z:/DAA/Marketing/MKT_output.csv", header = T, stringsAsFactors = F)
+#FM <- read.csv("C:/Users/christine.iyer/Box/AnnualCampaignVendorPerformance/MKT_output.csv", header = T, stringsAsFactors = F)
 ```
 
 ```{r}
@@ -740,8 +740,7 @@ FB_VID_PLT <- function(temp_F) {
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
     theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
           panel.background = element_blank(), axis.line = element_line(colour = "black")) +
-    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank()) +
-    geom_hline(yintercept = 0.0, linetype="dashed")
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank()) 
   
   PGImp <- IGD %>% 
     ggplot(aes(x = Week, y = Impressions , color = Code_Audience)) +
@@ -772,8 +771,7 @@ FB_VID_PLT <- function(temp_F) {
     scale_color_manual(values = colorP) +
     theme_bw() + 
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())+
-    geom_hline(yintercept = 20.0, linetype="dashed")
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())
   
   PGVTR <- IGD %>% 
     ggplot(aes(x = Week, y = VTR , color = Code_Audience)) +
@@ -781,7 +779,6 @@ FB_VID_PLT <- function(temp_F) {
     scale_color_manual(values = colorP) +
     theme_bw() + 
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
-    geom_hline(yintercept = 20, linetype="dashed") +
     theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())
   
   
@@ -819,8 +816,7 @@ IG_VID_PLT <- function(temp_F) {
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
     theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
           panel.background = element_blank(), axis.line = element_line(colour = "black")) +
-    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank()) +
-    geom_hline(yintercept = 0.0, linetype="dashed")
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank()) 
   
   PGImp <- IGD %>% 
     ggplot(aes(x = Week, y = Impressions , color = Code_Audience)) +
@@ -851,8 +847,7 @@ IG_VID_PLT <- function(temp_F) {
     scale_color_manual(values = colorP) +
     theme_bw() + 
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())+
-    geom_hline(yintercept = 20.0, linetype="dashed")
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())
   
   PGVTR <- IGD %>% 
     ggplot(aes(x = Week, y = VTR , color = Code_Audience)) +
@@ -860,7 +855,6 @@ IG_VID_PLT <- function(temp_F) {
     scale_color_manual(values = colorP) +
     theme_bw() + 
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
-    geom_hline(yintercept = 20, linetype="dashed") +
     theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())
   
   
@@ -1053,9 +1047,145 @@ return(pander(paste("Midterm report completed on ", Midterm_Report_Date)))
 ```{r final report}
 final <- function(Final_Report_Date){
 
-return(pander(paste("Final/Fiscal YTD report completed on ", Final_Report_Date)))
+return(pander(paste("Final/Fiscal YTD report summarizes performance through ", Final_Report_Date +7)))
 }
 ```
+
+```{r Facebook Carousel}
+FB_CAR_PLT <- function(temp_F) {
+  PGCTR <- IGD %>%  
+    ggplot(aes(x = Week, y = ClickRatePct , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank()) 
+  
+  PGImp <- IGD %>% 
+    ggplot(aes(x = Week, y = Impressions , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+    theme(axis.title.x=element_blank(),
+          axis.ticks.x=element_blank()) 
+  
+  
+  PGUPV <- IGD %>% 
+    ggplot(aes(x = Week, y = UPV , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())
+  
+  
+  
+  PGBR <- IGD %>% 
+    ggplot(aes(x = Week, y = BounceRatePct , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())
+  
+  
+  a <- ggarrange(PGImp, PGCTR, PGUPV, PGBR, ncol=4, nrow=1, common.legend = TRUE, legend="right")
+  annotate_figure(a, text_grob(paste0( IGD$Code_Vendor, "_ ", IGD$Code_Medium, "_ ", IGD$Code_Product), color = "darkblue", face = "plain", size = 18, just = "right"))
+  
+  
+  
+}
+
+
+FB_CAR_TBL <- function(temp_C){
+  TD <- kable(IGD %>%
+  group_by(Code_Audience) %>%
+        summarise(YTD_Impressions = prettyNum(round(sum(Impressions),0), big.mark = ","),
+                  Avg_CTR = round(sum(Clicks)/sum(Impressions) * 100, 2),
+                  YTD_UPV = prettyNum(round(sum(UPV),0), big.mark = ","),
+                  Avg_BR = paste0(round(sum(Bounces)/sum(Sessions) * 100, 2), "%"),
+                  Avg_CTR = paste0(Avg_CTR, "%")))%>%
+kable_styling("striped", full_width = F) %>%
+  row_spec(0, angle = -30, font_size = 13)
+ return(TD)
+}
+
+```
+
+```{r Instagram Carousel}
+IG_CAR_PLT <- function(temp_F) {
+  PGCTR <- IGD %>%  
+    ggplot(aes(x = Week, y = ClickRatePct , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank()) 
+  
+  PGImp <- IGD %>% 
+    ggplot(aes(x = Week, y = Impressions , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+    theme(axis.title.x=element_blank(),
+          axis.ticks.x=element_blank()) 
+  
+  
+  PGUPV <- IGD %>% 
+    ggplot(aes(x = Week, y = UPV , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())
+  
+  
+  
+  PGBR <- IGD %>% 
+    ggplot(aes(x = Week, y = BounceRatePct , color = Code_Audience)) +
+    geom_line(size = 1.2) +
+    scale_color_manual(values = colorP) +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    theme(axis.title.x=element_blank(),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"),axis.ticks.x=element_blank())
+  
+  
+  a <- ggarrange(PGImp, PGCTR, PGUPV, PGBR, ncol=4, nrow=1, common.legend = TRUE, legend="right")
+  annotate_figure(a, text_grob(paste0( IGD$Code_Vendor, "_ ", IGD$Code_Medium, "_ ", IGD$Code_Product), color = "darkblue", face = "plain", size = 18, just = "right"))
+  
+  
+  
+}
+
+
+IG_CAR_TBL <- function(temp_C){
+  TD <- kable(IGD %>%
+  group_by(Code_Audience) %>%
+        summarise(YTD_Impressions = prettyNum(round(sum(Impressions),0), big.mark = ","),
+                  Avg_CTR = round(sum(Clicks)/sum(Impressions) * 100, 2),
+                  YTD_UPV = prettyNum(round(sum(UPV),0), big.mark = ","),
+                  Avg_BR = paste0(round(sum(Bounces)/sum(Sessions) * 100, 2), "%"),
+                  Avg_CTR = paste0(Avg_CTR, "%"))) %>%
+kable_styling("striped", full_width = F) %>%
+  row_spec(0, angle = -30, font_size = 13)
+ return(TD)
+ return(kable(TD))
+}
+
+```
+
 
 # Undergraduate Program
 
@@ -1433,6 +1563,10 @@ PIN_DISP_TBL(TD)
 
 ## SC_VID Phase 1 Run Time: October 29 - November 30
 
+**Note:** Looks like this campaign ran through mid-February. 
+
+
+
 ```{r}
 start_Date <- as.Date("2019-10-29")
 Midterm_Report_Date <- start_Date + 60
@@ -1483,7 +1617,8 @@ SC_VID_TBL(TD)
 start_Date <- as.Date("2019-10-29")
 IGD <- FMVM %>% 
   filter(Code_Vendor == "SC" &
-           Code_Medium == "VID"  & 
+           Code_Medium == "VID" & 
+           Code_Product == "UG" & 
            Week >= start_Date & 
            Week <= max(Week)) 
 
@@ -1503,7 +1638,7 @@ SC_VID_TBL(TD)
 
 
 ```{r}
-start_Date <- as.Date("2020-01-21")
+start_Date <- as.Date("2020-03-01")
 Midterm_Report_Date <- start_Date + 60
 ```
 
@@ -1634,6 +1769,8 @@ SC_VID_TBL(TD)
 ## YouTube
 
 Phase 1 Run Time: October 29 - November 30
+
+**Note:** Looks like this ran through the end of January, 2020
 
 
 ```{r}
@@ -2108,9 +2245,6 @@ IGD <- FMVM %>%
 ```
 
 
-```{r}
-final(max(IGD$Week))
-```
 
 
 ```{r}
@@ -2118,129 +2252,189 @@ IG_DISP_PLT(a)
 IG_DISP_TBL(TD)
 ```
 
+## FB_VID_TR {.tabset .tabset-fade}
+
+### Phase 1 Run Time: July 1 - July 31
+
+```{r}
+start_Date <- as.Date("2019-07-01")
+end_Date <- start_Date+35
+IGD <- FMVM %>% 
+  filter(
+    Code_Vendor == "FB" & 
+      Code_Medium == "VID" &
+      Code_Audience == "CU" & 
+      Week >= start_Date & 
+      Week <= end_Date) 
+FB_VID_PLT(a)
+FB_VID_TBL(TD)
+```
+
+
+### Phase 2 Run Time: November 1 - December 31
+
+
+```{r}
+start_Date <- as.Date("2019-10-29")
+end_Date <- start_Date+75
+IGD <- FMVM %>% 
+  filter(
+    Code_Vendor == "FB" & 
+      Code_Medium == "VID" &
+      Code_Audience == "CU" & 
+      Week >= start_Date & 
+      Week <= end_Date) 
+FB_VID_PLT(a)
+FB_VID_TBL(TD)
+```
 
 
 
 
+
+
+
+## IG_VID_TR
+
+
+### Phase 1 Run Time: July 1 - July 31
+
+```{r}
+start_Date <- as.Date("2019-07-01")
+end_Date <- start_Date+35
+IGD <- FMVM %>% 
+  filter(
+    Code_Vendor == "IG" & 
+      Code_Medium == "VID" &
+      Code_Audience == "CU" & 
+      Week >= start_Date & 
+      Week <= end_Date) 
+IG_VID_PLT(a)
+IG_VID_TBL(TD)
+```
+
+
+### Phase 2 Run Time: November 1 - December 31
+
+
+```{r}
+start_Date <- as.Date("2019-10-29")
+end_Date <- start_Date+75
+IGD <- FMVM %>% 
+  filter(
+    Code_Vendor == "IG" & 
+      Code_Medium == "VID" &
+      Code_Audience == "CU" & 
+      Week >= start_Date & 
+      Week <= end_Date) 
+IG_VID_PLT(a)
+IG_VID_TBL(TD)
+```
+## DBM_DISP_TR
+
+### Phase 1 Run Time: August 15 - August 31
+
+```{r}
+start_Date <- as.Date("2019-08-15")
+end_Date <- start_Date+25
+IGD <- FMVM %>% 
+  filter(
+    Code_Vendor == "DBM" & 
+      Code_Medium == "DISP" &
+      Code_Audience == "CU" & 
+      Week >= start_Date & 
+      Week <= end_Date) 
+DBM_DISP_PLT(a)
+DBM_DISP_TBL(TD)
+```
+
+### Phase 2 Run Time: October 1 - December 31
+
+```{r}
+start_Date <- as.Date("2019-10-01")
+end_Date <- start_Date+100
+IGD <- FMVM %>% 
+  filter(
+    Code_Vendor == "DBM" & 
+      Code_Medium == "DISP" &
+      Code_Audience == "CU" & 
+      Week >= start_Date & 
+      Week <= end_Date) 
+DBM_DISP_PLT(a)
+DBM_DISP_TBL(TD)
+```
+
+
+### Phase 3 Run Time: February 1 - April 30
+
+```{r}
+start_Date <- as.Date("2020-02-01")
+end_Date <- start_Date+135
+IGD <- FMVM %>% 
+  filter(
+    Code_Vendor == "DBM" & 
+      Code_Medium == "DISP" &
+      Code_Audience == "CU" & 
+      Week >= start_Date & 
+      Week <= end_Date) 
+DBM_DISP_PLT(a)
+DBM_DISP_TBL(TD)
+```
+
+
+## YT_VID_TR
+
+### Phase 1 Run Time: October 1 - December 31
+
+```{r}
+start_Date <- as.Date("2019-10-01")
+end_Date <- start_Date+90
+IGD <- FMVM %>% 
+  filter(
+    Code_Vendor == "YT" & 
+      Code_Medium == "VID" &
+      Week >= start_Date & 
+      Week <= end_Date) 
+YT_VID_PLT(a)
+YT_VID_TBL(TD)
+```
+
+### Phase 2 Run Time: February 1 - April 30
+
+```{r}
+start_Date <- as.Date("2020-02-01")
+end_Date <- start_Date+100
+IGD <- FMVM %>% 
+  filter(
+    Code_Vendor == "YT" & 
+      Code_Medium == "VID" &
+      Code_Audience == "CU" & 
+      Week >= start_Date & 
+      Week <= end_Date) 
+YT_VID_PLT(a)
+YT_VID_TBL(TD)
+```
+
+
+### Phase 3 Run Time: June 1 - June 30
+
+```{r}
+start_Date <- as.Date("2020-02-01")
+end_Date <- start_Date+135
+IGD <- FMVM %>% 
+  filter(
+    Code_Vendor == "YT" & 
+      Code_Medium == "VID" &
+      Code_Audience == "CU" & 
+      Week >= start_Date & 
+      Week <= end_Date) 
+YT_VID_PLT(a)
+YT_VID_TBL(TD)
+```
 
 ## Working Adults
 
 ## Graduate
-
-
-
-
-
-
-
-
-
-
-## FB_CAR_UG {.tabset .tabset-fade}
-
-### Seven Day
-
-```{r}
-start_Date <- as.Date("2019-08-15")
-end_Date <- start_Date + 20
-IGD <- FMVM %>% 
-  filter(
-    Code_Vendor == "FB" & 
-      Code_Medium == "CAR" &
-      Code_Product == "UG" & 
-      Week >= start_Date & 
-      Week <= end_Date) 
-FB_DISP_PLT(a)
-FB_DISP_TBL(TD)
-```
-
-### Sixty Day
-
-
-```{r}
-start_Date <- as.Date("2019-08-15")
-end_Date <- start_Date + 60
-IGD <- FMVM %>% 
-  filter(
-    Code_Vendor == "FB" & 
-      Code_Medium == "CAR" &
-      Code_Audience == "HS" & 
-      Week >= start_Date & 
-      Week <= end_Date) 
-FB_DISP_PLT(a)
-FB_DISP_TBL(TD)
-```
-
-### Year to Date
-
-```{r}
-start_Date <- as.Date("2019-08-15")
-#end_Date <- max(FMVMWeek)
-IGD <- FMVM %>% 
-  filter(
-    Code_Vendor == "FB" & 
-    Code_Medium == "CAR" &
-    Code_Audience == "HS" &
-    Week >= start_Date & 
-    Week <= max(Week)) 
-FB_DISP_PLT(a)
-FB_DISP_TBL(TD)
-```
-
-
-
-## IG_CAR_UG {.tabset .tabset-fade}
-
-### Seven Day
-
-```{r}
-start_Date <- as.Date("2019-08-15")
-end_Date <- start_Date + 20
-IGD <- FMVM %>% 
-  filter(
-    Code_Vendor == "IG" & 
-      Code_Medium == "CAR" &
-      Code_Product == "UG" & 
-      Week >= start_Date & 
-      Week <= end_Date) 
-FB_DISP_PLT(a)
-FB_DISP_TBL(TD)
-```
-
-### Sixty Day
-
-
-```{r}
-start_Date <- as.Date("2019-08-15")
-end_Date <- start_Date + 60
-IGD <- FMVM %>% 
-  filter(
-    Code_Vendor == "IG" & 
-      Code_Medium == "CAR" &
-      Code_Audience == "HS" & 
-      Week >= start_Date & 
-      Week <= end_Date) 
-FB_DISP_PLT(a)
-FB_DISP_TBL(TD)
-```
-
-### Year to Date
-
-```{r}
-start_Date <- as.Date("2019-08-15")
-#end_Date <- max(FMVMWeek)
-IGD <- FMVM %>% 
-  filter(
-    Code_Vendor == "IG" & 
-    Code_Medium == "CAR" &
-    Code_Audience == "HS" &
-    Week >= start_Date & 
-    Week <= max(Week)) 
-FB_DISP_PLT(a)
-FB_DISP_TBL(TD)
-```
-
-
 
 
 ## GM_TEXT{.tabset .tabset-fade}
