@@ -1,0 +1,145 @@
+---
+title: "Google Analytics"
+author: "Christine Iyer"
+date: "October 3, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r library}
+
+library(googleAnalyticsR)
+```
+
+
+## Google Analytics
+
+### Step 1
+Authorize API
+
+```{r auth and account}
+ga_auth()
+
+my_accounts <- ga_account_list()
+View(my_accounts)
+ga_id <- 63145830
+```
+
+
+```{r}
+# start_date <- "2020-01-21"
+# end_date <-  "2020-01-28"
+# 
+# campaign_filter <- dim_filter(dimension="region",operator="EXACT",expressions="Connecticut")
+# my_filter_clause <- filter_clause_ga4(list(campaign_filter))
+# 
+# GALast <- google_analytics(ga_id, date_range = c(start_date, end_date), 
+#                                 metrics = c("uniquePageviews", "bounces", "timeOnPage", "sessions", "newUsers", "pageviews", "exits", "sessionDuration"), 
+#                                 dimensions = c("date", "landingPagePath","source", "medium", "adContent", "campaign", "region", "city"), 
+#                                 dim_filters = my_filter_clause,
+#                                 anti_sample = TRUE
+#                                 )
+# write.csv(GA_thisWk, "C:/Users/christine.iyer/Box/FY20_Advertising/FY20_GoogleAnalytics/GoogleAnalytics_CT_TravelFall18.csv", row.names = F)
+# 
+# GALast <- read.csv("C:/Users/christine.iyer/Box/FY20_Advertising/FY20_GoogleAnalytics/GoogleAnalytics_CT_TravelFall19.csv", header = T, stringsAsFactors = F)
+# head(GALast)
+# head(GA_thisWk)
+# GACT <- rbind.data.frame(GALast, GA_thisWk)
+# 
+# write.csv(GACT, "C:/Users/christine.iyer/Box/FY20_Advertising/FY20_GoogleAnalytics/GoogleAnalytics_CT_AllTravelFall.csv", row.names = F)
+# dim(GACT)
+```
+
+### Step 2
+Set date parameters
+
+```{r date range}
+start_date <- "2020-02-25"
+end_date <-  "2020-03-02"
+```
+
+### Step 3
+Set filter for Advertising Campaigns and put it into a list format
+
+```{r}
+campaign_filter <- dim_filter(dimension="campaign",operator="REGEXP",expressions="FY20")
+my_filter_clause <- filter_clause_ga4(list(campaign_filter))
+```
+
+### Step 4
+Make data request
+
+```{r request}
+GA_thisWk <- google_analytics(ga_id, date_range = c(start_date, end_date), 
+                                metrics = c("uniquePageviews", "bounces", "timeOnPage", "sessions", "newUsers", "pageviews", "exits", "sessionDuration"), 
+                                dimensions = c("date", "landingPagePath","source", "medium", "adContent", "campaign", "region", "city"), 
+                                dim_filters = my_filter_clause,
+                                anti_sample = TRUE
+                                )
+
+```
+
+### Step 5
+Save the dataset
+
+```{r}
+head(GA_thisWk)
+tail(GA_thisWk)
+unique(GA_thisWk$source)
+#GA_thisWk %>% group_by(source) %>% summarise(UPV = sum(uniquePageviews))
+write.csv(GA_thisWk, "C:/Users/christine.iyer/Box/FY20_Advertising/FY20_GoogleAnalytics/GoogleAnalytics_02-25-20.csv", row.names = F)
+#":\FileMaker\Uploads\GoogleAnalytics.csv"
+
+write.csv(GA_thisWk, "file:///C:/FileMaker/Uploads/GoogleAnalytics.csv", row.names = FALSE)
+
+```
+
+
+**END HERE**
+
+
+### Step 6 
+Read in FY19 to date and newest dataset
+
+```{r eval=FALSE, include=FALSE}
+GoogleAnalytics <- read.csv("file:///C:/Users/christine.iyer.UAD/Box/FY19_Advertising/YearToDateDatasets/FY19_GoogleAnalytics_New.csv", header = T, stringsAsFactors = F)
+GA_New_Data <- read.csv("file:///C:/Users/christine.iyer.UAD/Box/FY19_Advertising/FY19_GoogleAnalytics/GoogleAnalytics_11-06-18.csv", header = T, stringsAsFactors = F)
+
+```
+
+"C:\Users\christine.iyer\Downloads\report1569441670034.csv"
+
+### Step 7
+Combine new data with YTD data after making sure all the variables are compatible
+```{r eval=FALSE, include=FALSE}
+head(GoogleAnalytics)
+head(GA_New_Data)
+GoogleAnalytics$date <- as.Date(GoogleAnalytics$date, format = "%m/%d/%Y")
+GA_New_Data$date <- as.Date(GA_New_Data$date, format = "%Y-%m-%d")
+GA <- rbind.data.frame(GoogleAnalytics, GA_New_Data)
+GA <- GA %>% mutate(adContent = toupper(adContent))
+tail(GA)
+```
+
+### Step 8
+
+
+Fix mislabeled Transfer Ads in GA
+
+```{r eval=FALSE, include=FALSE}
+head(GA)
+GA <- GA %>% mutate(adContent = ifelse(adContent == "FY19_IG_FB_DISP_TR_UG_S_1", "FY19_IG_FB_DISP_CU_TR_S_1", 
+                                ifelse(adContent == "FY19_IG_FB_DISP_TR_UG_S_2", "FY19_IG_FB_DISP_CU_TR_S_2",
+                                       ifelse(adContent == "FY19_IG_FB_DISP_TR_UG_S_3", "FY19_IG_FB_DISP_CU_TR_S_3", adContent))))
+
+unique(GA$adContent)
+```
+
+
+```{r eval=FALSE, include=FALSE}
+write.csv(GA, "file:///C:/Users/christine.iyer.UAD/Box/FY19_Advertising/YearToDateDatasets/FY19_GoogleAnalytics_New.csv", row.names = F)
+```
+

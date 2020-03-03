@@ -2032,11 +2032,11 @@ IG_VID_TBL(TD)
 
 ## IG_ST_UG
 
-Run Time: September 30 - TBA
+Run Time: November 1 - TBA
 
 
 ```{r}
-start_Date <- as.Date("2019-08-30")
+start_Date <- as.Date("2019-11-01")
 Midterm_Report_Date <- start_Date + 60
 ```
 
@@ -2086,7 +2086,7 @@ IG_VID_TBL(TD)
 
 ```{r}
 
-start_Date <- as.Date("2019-08-15")
+start_Date <- as.Date("2019-11-01")
 #end_Date <- max(FMVMWeek)
 IGD <- FMVM %>% 
   filter(Code_Vendor == "IG" &
@@ -2288,13 +2288,7 @@ FB_VID_PLT(a)
 FB_VID_TBL(TD)
 ```
 
-
-
-
-
-
-
-## IG_VID_TR
+## IG_ST_TR
 
 
 ### Phase 1 Run Time: July 1 - July 31
@@ -2330,6 +2324,26 @@ IGD <- FMVM %>%
 IG_VID_PLT(a)
 IG_VID_TBL(TD)
 ```
+
+## IG_ST_TR
+
+
+### November 1 - TBA
+
+
+```{r}
+start_Date <- as.Date("2019-10-29")
+end_Date <- start_Date+75
+IGD <- FMVM %>% 
+  filter(
+    Code_Vendor == "IG" & 
+      Code_Medium == "ST" &
+      Code_Audience == "CU" & 
+      Week >= start_Date) 
+IG_VID_PLT(a)
+IG_VID_TBL(TD)
+```
+
 ## DBM_DISP_TR
 
 ### Phase 1 Run Time: August 15 - August 31
@@ -2430,6 +2444,129 @@ IGD <- FMVM %>%
       Week <= end_Date) 
 YT_VID_PLT(a)
 YT_VID_TBL(TD)
+```
+
+## SC_VID_TR
+
+### Phase 1 Run Time: October 1 - December 31
+
+```{r}
+start_Date <- as.Date("2019-10-28")
+end_Date <- start_Date+75
+IGD <- FMVM %>% 
+  filter(
+    Code_Vendor == "SC" & 
+      Code_Medium == "VID" &
+      Code_Audience == "CU" & 
+      Week >= start_Date & 
+      Week <= end_Date) 
+SC_VID_PLT(a)
+SC_VID_TBL(TD)
+```
+
+### Phase 2 Run Time: March 1 - April 30
+
+```{r}
+start_Date <- as.Date("2020-03-01")
+end_Date <- start_Date+75
+IGD <- FMVM %>% 
+  filter(
+    Code_Vendor == "SC" & 
+      Code_Medium == "VID" &
+      Code_Audience == "CU" & 
+      Week >= start_Date & 
+      Week <= end_Date) 
+SC_VID_PLT(a)
+SC_VID_TBL(TD)
+```
+
+
+### Phase 3 Run Time: June 1 - June 30
+
+```{r}
+start_Date <- as.Date("2020-06-30")
+end_Date <- start_Date+39
+IGD <- FMVM %>% 
+  filter(
+    Code_Vendor == "SC" & 
+      Code_Medium == "VID" &
+      Code_Audience == "CU" & 
+      Week >= start_Date & 
+      Week <= end_Date) 
+SC_VID_PLT(a)
+SC_VID_TBL(TD)
+```
+
+## TW_DISP_UG
+
+Run Time: November 1 - December 31
+
+
+```{r}
+start_Date <- as.Date("2019-11-01")
+Midterm_Report_Date <- start_Date + 60
+```
+
+### Seven Day
+
+```{r}
+seven(start_Date)
+```
+
+
+```{r}
+
+end_Date <- start_Date + 14
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "TW" &
+           Code_Medium == "DISP"  &
+           Week >= start_Date & 
+           Week <= end_Date & 
+           Code_Audience == "CU") 
+TW_DISP_PLT(a)
+TW_DISP_TBL(TD)
+```
+
+### Sixty Day Report
+
+```{r}
+midterm(Midterm_Report_Date)
+```
+
+```{r}
+start_Date <- as.Date("2019-11-01")
+end_Date <- start_Date + 60
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "TW" &
+           Code_Medium == "DISP"  &
+           Week >= start_Date & 
+           Week <= end_Date & 
+           Code_Audience == "CU") 
+TW_DISP_PLT(a)
+TW_DISP_TBL(TD)
+```
+
+### Year to Date
+
+```{r}
+start_Date <- as.Date("2019-11-01")
+IGD <- FMVM %>% 
+  filter(Code_Vendor == "TW" &
+           Code_Medium == "DISP"  &
+           Week >= start_Date & 
+           Week <= max(Week) & 
+           Code_Audience == "CU") 
+
+```
+
+
+```{r}
+final(max(IGD$Week))
+```
+
+```{r}
+TW_DISP_PLT(a)
+TW_DISP_TBL(TD)
 ```
 
 ## Working Adults
